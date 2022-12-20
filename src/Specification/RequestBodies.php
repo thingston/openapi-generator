@@ -16,7 +16,7 @@ final class RequestBodies extends AbstractSpecification
     public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
     {
         parent::assertArrayableType($value, implode('|', [
-            RequestBodys::class,
+            RequestBodies::class,
             Reference::class,
         ]));
     }
