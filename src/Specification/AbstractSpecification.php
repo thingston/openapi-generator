@@ -1,0 +1,237 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Thingston\OpenApi\Specification;
+
+use ArrayAccess;
+use ArrayObject;
+use Countable;
+use IteratorAggregate;
+use JsonSerializable;
+use Stringable;
+use Thingston\OpenApi\Exception\InvalidArgumentException;
+use Traversable;
+
+use function count;
+use function json_encode;
+
+abstract class AbstractSpecification implements
+    SpecificationInterface,
+    JsonSerializable,
+    Stringable,
+    Countable,
+    IteratorAggregate,
+    ArrayAccess
+{
+    public ?string $key = null;
+    protected array $properties = [];
+
+    public function getRequiredProperties(): array
+    {
+        return [];
+    }
+
+    public function getOptionalProperties(): array
+    {
+        return [];
+    }
+
+    public function getProperties(): array
+    {
+        return array_merge($this->getRequiredProperties(), $this->getOptionalProperties());
+    }
+
+    public function isRequiredProperty(string $name): bool
+    {
+        return array_key_exists($name, $this->getRequiredProperties());
+    }
+
+    public function isOptionalProperty(string $name): bool
+    {
+        return array_key_exists($name, $this->getOptionalProperties());
+    }
+
+    public function isProperty(string $name): bool
+    {
+        return $this->isRequiredProperty($name) || $this->isOptionalProperty($name);
+    }
+
+    public function assertPropertyExists(string $name): void
+    {
+        if (false === $this->isProperty($name)) {
+            $message = sprintf('Class "%s" doesn\'t have a property called "%s".', get_class($this), $name);
+            throw new InvalidArgumentException($message);
+        }
+    }
+
+    public function assertPropertyNullable(string $name, $value): void
+    {
+        if (null === $value && $this->isRequiredProperty($name)) {
+            $message = sprintf('Property "%s" of class "%s" can\'t bel "null".', $name, get_class($this));
+            throw new InvalidArgumentException($message);
+        }
+    }
+
+    public function assertPropertyType(string $name, $value): void
+    {
+        $this->assertPropertyExists($name);
+        $this->assertPropertyNullable($name, $value);
+
+        $expected = explode('|', $this->getProperties()[$name]);
+        $type = gettype($value);
+
+        if (null === $value || in_array($type, $expected) || in_array('mixed', $expected)) {
+            return;
+        }
+
+        if (in_array('float', $expected) && in_array($type, ['integer', 'float', 'double', 'real'])) {
+            return;
+        }
+
+        if ('object' === $type) {
+            foreach ($expected as $class) {
+                if (is_a($value, $class)) {
+                    return;
+                }
+            }
+
+            $type = get_class($value);
+        }
+
+        $message = sprintf(
+            'Property "%s" of class "%s" must be of the type "%s" and can\'t be "%s".',
+            $name,
+            get_class($this),
+            implode('", "', $expected),
+            $type
+        );
+
+        throw new InvalidArgumentException($message);
+    }
+
+    public function toArray(): array
+    {
+        $data = [];
+
+        foreach ($this->properties as $name => $property) {
+            if (null === $property) {
+                continue;
+            }
+
+            if (is_int($name) && $property instanceof AbstractSpecification && null !== $property->key) {
+                $name = $property->key;
+            }
+
+            $data[$name] = $property;
+        }
+
+        return $data;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->toArray();
+    }
+
+    public function __toString(): string
+    {
+        return json_encode($this, JSON_PRETTY_PRINT);
+    }
+
+    public function __set($name, $value): void
+    {
+        $this->assertPropertyType($name, $value);
+        $this->properties[$name] = $value;
+    }
+
+    public function __get($name)
+    {
+        $this->assertPropertyExists($name);
+
+        return $this->properties[$name] ?? null;
+    }
+
+    public function __isset($name): bool
+    {
+        return isset($this->properties[$name]);
+    }
+
+    public function __unset($name): void
+    {
+        unset($this->properties[$name]);
+    }
+
+    public function count(): int
+    {
+        return count($this->properties);
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayObject($this->properties);
+    }
+
+    public function offsetExists($offset): bool
+    {
+        return isset($this->properties[$offset]);
+    }
+
+    public function offsetGet($offset): mixed
+    {
+        return $this->properties[$offset];
+    }
+
+    public function assertIsArrayable(): void
+    {
+        if (count($this->getProperties())) {
+            $message = sprintf('Class "%s" can\'t be used as an array.', get_class($this));
+            throw new InvalidArgumentException($message);
+        }
+    }
+
+    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    {
+        $acceptables = explode('|', $type);
+
+        foreach ($acceptables as $acceptable) {
+            if (is_a($value, $acceptable)) {
+                return;
+            }
+        }
+
+        $message = sprintf(
+            'Class "%s" only accepts elements of type "%s".',
+            get_class($this),
+            implode('", "', $acceptables)
+        );
+
+        throw new InvalidArgumentException($message);
+    }
+
+    public function offsetSet($offset, $value): void
+    {
+        if (is_string($offset)) {
+            $this->$offset = $value;
+
+            return;
+        }
+
+        $this->add($value);
+    }
+
+    public function offsetUnset($offset): void
+    {
+        unset($this->properties[$offset]);
+    }
+
+    public function add(AbstractSpecification $specification): self
+    {
+        $this->assertIsArrayable();
+        $this->assertArrayableType($specification);
+
+        $this->properties[] = $specification;
+
+        return $this;
+    }
+}
