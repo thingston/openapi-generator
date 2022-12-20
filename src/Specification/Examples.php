@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
-use Thingston\OpenApi\Exception\InvalidArgumentException;
-
 final class Examples extends AbstractSpecification
 {
     public function __construct(array $examples = [])
@@ -15,30 +13,8 @@ final class Examples extends AbstractSpecification
         }
     }
 
-    public function add(AbstractSpecification $specification): AbstractSpecification
+    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
     {
-        if (false === $specification instanceof Example && false === $specification instanceof Reference) {
-            $message = sprintf(
-                'Class "%s" only accepts elements of type "%s" or "%s".',
-                get_class($this),
-                Example::class,
-                Reference::class
-            );
-
-            throw new InvalidArgumentException($message);
-        }
-
-        return parent::add($specification);
-    }
-
-    public function toArray(): array
-    {
-        $examples = [];
-
-        foreach ($this->properties as $example) {
-            $examples[$example->name] = $example;
-        }
-
-        return $examples;
+        parent::assertArrayableType($value, implode('|', [Example::class, Reference::class]));
     }
 }

@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
-final class Responses extends AbstractSpecification
+final class RequestBodies extends AbstractSpecification
 {
-    public function __construct(array $responses = [])
+    public function __construct(array $requestBodies = [])
     {
-        foreach ($responses as $response) {
-            $this->add($response);
+        foreach ($requestBodies as $requestBody) {
+            $this->add($requestBody);
         }
     }
 
     public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
     {
         parent::assertArrayableType($value, implode('|', [
-            Responses::class,
+            RequestBodys::class,
             Reference::class,
         ]));
     }

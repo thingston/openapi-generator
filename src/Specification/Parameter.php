@@ -42,4 +42,9 @@ final class Parameter extends AbstractSpecification
             'allowEmptyValue' => 'boolean',
         ];
     }
+
+    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    {
+        parent::assertArrayableType($value, Operation::class);
+    }
 }
