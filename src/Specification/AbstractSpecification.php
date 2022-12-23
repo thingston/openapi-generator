@@ -60,7 +60,7 @@ abstract class AbstractSpecification implements
     protected function assertPropertyExists(string $name): void
     {
         if (false === $this->isProperty($name)) {
-            $message = sprintf('Class "%s" doesn\'t have a property called "%s".', get_class($this), $name);
+            $message = sprintf('Property "%s" not found in class "%s".', $name, get_class($this));
             throw new InvalidArgumentException($message);
         }
     }
@@ -185,7 +185,7 @@ abstract class AbstractSpecification implements
             return $this->add($value);
         }
 
-        $this->assertPropertyType($name, $value);
+        $this->assertPropertyType($property, $value);
         $this->properties[$property] = $value;
 
         return $this;

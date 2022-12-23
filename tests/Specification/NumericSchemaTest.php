@@ -5,24 +5,23 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Test\Specification;
 
 use Thingston\OpenApi\Specification\AbstractSpecification;
-use Thingston\OpenApi\Specification\ArraySchema;
-use Thingston\OpenApi\Specification\StringSchema;
+use Thingston\OpenApi\Specification\NumericSchema;
 
-final class ArraySchemaTest extends AbstractSpecificationTest
+final class NumericSchemaTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        return new ArraySchema('name');
+        return new NumericSchema('name');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        return (new ArraySchema('name'))
-            ->setItems(new StringSchema('item'))
-            ->setAdditionalItems(false)
-            ->setMinItems(3)
-            ->setMaxItems(7)
-            ->setUniqueItems(true)
+        return $schema = (new NumericSchema('name'))
+            ->setMinimum(10.0)
+            ->setMaximum(100.0)
+            ->setExclusiveMinimum(false)
+            ->setExclusiveMaximum(false)
+            ->setMultipleOf(5.0)
             ->setTitle('Schema title')
             ->setDescription('Some description')
             ->setNullable(false);

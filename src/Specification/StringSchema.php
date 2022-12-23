@@ -5,15 +5,22 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * @property int|null $minLength
- * @property int|null $maxLength
- * @property string|null $pattern
+ * String schema object.
+ *
+ * @link https://cswr.github.io/JsonSchema/spec/basic_types/#string-schemas
+ *
+ * @method int|null getMinLength()
+ * @method StringSchema setMinLength(?int $minLength)
+ * @method int|null getMaxLength()
+ * @method StringSchema setMaxLength(?int $maxLength)
+ * @method string|null getPattern()
+ * @method StringSchema setPattern(?string $pattern)
  */
 final class StringSchema extends Schema
 {
-    public function __construct(public string $name)
+    public function __construct(string $key)
     {
-        parent::__construct($name, self::TYPE_STRING);
+        parent::__construct($key, self::TYPE_STRING);
     }
 
     public function getOptionalProperties(): array

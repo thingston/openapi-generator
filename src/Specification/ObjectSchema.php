@@ -7,17 +7,26 @@ namespace Thingston\OpenApi\Specification;
 use Thingston\OpenApi\Exception\InvalidArgumentException;
 
 /**
- * @property array|null $required
- * @property Schemas|null $properties
- * @property bool|null $additionalProperties
- * @property int|null $minProperties
- * @property int|null $maxProperties
+ * Object schema object.
+ *
+ * @link https://cswr.github.io/JsonSchema/spec/objects/#object-schemas
+ *
+ * @method string[]|null getRequired()
+ * @method ObjectSchema setRequired(?array $required)
+ * @method Schemas|null getProperties()
+ * @method ObjectSchema setProperties(?Schemas $properties)
+ * @method bool|null getAdditionalProperties()
+ * @method ObjectSchema setAdditionalProperties(?bool $additionalProperties)
+ * @method int|null getMinProperties()
+ * @method ObjectSchema setMinProperties(?int $minProperties)
+ * @method int|null getMaxProperties()
+ * @method ObjectSchema setMaxProperties(?int $maxProperties)
  */
 final class ObjectSchema extends Schema
 {
-    public function __construct(public string $name)
+    public function __construct(string $key)
     {
-        parent::__construct($name, self::TYPE_OBJECT);
+        parent::__construct($key, self::TYPE_OBJECT);
     }
 
     public function getOptionalProperties(): array

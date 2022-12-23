@@ -11,18 +11,14 @@ final class NullSchemaTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $schema = new NullSchema('name');
-
-        return $schema;
+        return new NullSchema('name');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $schema = new NullSchema('name');
-        $schema->title = 'Schema title';
-        $schema->description = 'Some description';
-        $schema->nullable = false;
-
-        return $schema;
+        return $schema = (new NullSchema('name'))
+            ->setTitle('Schema title')
+            ->setDescription('Some description')
+            ->setNullable(false);
     }
 }

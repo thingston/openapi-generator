@@ -11,23 +11,19 @@ final class IntegerSchemaTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $schema = new IntegerSchema('name');
-
-        return $schema;
+        return new IntegerSchema('name');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $schema = new IntegerSchema('name');
-        $schema->title = 'Schema title';
-        $schema->description = 'Some description';
-        $schema->nullable = false;
-        $schema->minimum = 1;
-        $schema->maximum = 100;
-        $schema->exclusiveMinimum = true;
-        $schema->exclusiveMaximum = true;
-        $schema->multipleOf = 5;
-
-        return $schema;
+        return (new IntegerSchema('name'))
+            ->setMinimum(10)
+            ->setMaximum(100)
+            ->setExclusiveMinimum(false)
+            ->setExclusiveMaximum(false)
+            ->setMultipleOf(5.0)
+            ->setTitle('Schema title')
+            ->setDescription('Some description')
+            ->setNullable(false);
     }
 }

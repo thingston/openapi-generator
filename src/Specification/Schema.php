@@ -7,16 +7,26 @@ namespace Thingston\OpenApi\Specification;
 use Thingston\OpenApi\Exception\InvalidArgumentException;
 
 /**
- * @property string $name
- * @property string $type
- * @property string|null $title
- * @property string|null $description
- * @property bool|null $nullable
+ * The Schema Object allows the definition of input and output data types. These
+ * types can be objects, but also primitives and arrays. This object is an
+ * extended subset of the JSON Schema Specification Wright Draft 00.
+ *
+ * @link https://swagger.io/specification/#schema-object
+ * @link https://json-schema.org/
+ *
+ * @method string getType()
+ * @method Schema setType(string $type)
+ * @method string|null getTitle()
+ * @method Schema setTitle(?string $title)
+ * @method string|null getDescription()
+ * @method Schema setDescription(?string $description)
+ * @method boll|null getNullable()
+ * @method Schema setNullable(?bool $nullable)
  */
 abstract class Schema extends AbstractSpecification
 {
     public const TYPE_STRING = 'string';
-    public const TYPE_NUMBER = 'number';
+    public const TYPE_NUMERIC = 'number';
     public const TYPE_INTEGER = 'integer';
     public const TYPE_BOOLEAN = 'boolean';
     public const TYPE_NULL = 'null';
@@ -35,7 +45,7 @@ abstract class Schema extends AbstractSpecification
     {
         $types = [
             self::TYPE_STRING,
-            self::TYPE_NUMBER,
+            self::TYPE_NUMERIC,
             self::TYPE_INTEGER,
             self::TYPE_BOOLEAN,
             self::TYPE_NULL,

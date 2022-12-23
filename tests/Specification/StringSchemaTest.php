@@ -11,21 +11,17 @@ final class StringSchemaTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $schema = new StringSchema('name');
-
-        return $schema;
+        return new StringSchema('name');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $schema = new StringSchema('name');
-        $schema->title = 'Schema title';
-        $schema->description = 'Some description';
-        $schema->nullable = false;
-        $schema->minLength = 1;
-        $schema->maxLength = 10;
-        $schema->pattern = '/.*/';
-
-        return $schema;
+        return (new StringSchema('name'))
+            ->setMinLength(2)
+            ->setMaxLength(20)
+            ->setPattern('/\w+/')
+            ->setTitle('Schema title')
+            ->setDescription('Some description')
+            ->setNullable(false);
     }
 }

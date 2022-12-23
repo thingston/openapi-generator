@@ -11,18 +11,14 @@ final class BooleanSchemaTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $schema = new BooleanSchema('name');
-
-        return $schema;
+        return new BooleanSchema('name');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $schema = new BooleanSchema('name');
-        $schema->title = 'Schema title';
-        $schema->description = 'Some description';
-        $schema->nullable = false;
-
-        return $schema;
+        return $schema = (new BooleanSchema('name'))
+            ->setTitle('Schema title')
+            ->setDescription('Some description')
+            ->setNullable(false);
     }
 }

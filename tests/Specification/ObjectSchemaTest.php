@@ -12,23 +12,19 @@ final class ObjectSchemaTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $schema = new ObjectSchema('name');
-
-        return $schema;
+        return new ObjectSchema('name');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $schema = new ObjectSchema('name');
-        $schema->title = 'Schema title';
-        $schema->description = 'Some description';
-        $schema->nullable = false;
-        $schema->required = ['foo', 'bar'];
-        $schema->properties = new Schemas();
-        $schema->additionalProperties = false;
-        $schema->minProperties = 3;
-        $schema->maxProperties = 5;
-
-        return $schema;
+        return (new ObjectSchema('name'))
+            ->setRequired(['foo'])
+            ->setProperties(new Schemas())
+            ->setMinProperties(1)
+            ->setMaxProperties(3)
+            ->setAdditionalProperties(false)
+            ->setTitle('Schema title')
+            ->setDescription('Some description')
+            ->setNullable(false);
     }
 }
