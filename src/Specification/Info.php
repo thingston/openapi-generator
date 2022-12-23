@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
+ * Provides metadata about the API. The metadata MAY be used by tooling as required.
+ *
+ * @license https://swagger.io/specification/#info-object
+ *
  * @property string $title
  * @property string $version
  * @property string|null $description

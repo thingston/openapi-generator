@@ -23,11 +23,11 @@ abstract class Schema extends AbstractSpecification
     public const TYPE_ARRAY = 'array';
     public const TYPE_OBJECT = 'object';
 
-    public function __construct(public string $name, string $type)
+    public function __construct(string $key, string $type)
     {
         $this->assertSchemaType($type);
 
-        $this->name = $name;
+        $this->key = $key;
         $this->properties['type'] = $type;
     }
 

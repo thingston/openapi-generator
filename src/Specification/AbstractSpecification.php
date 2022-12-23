@@ -37,7 +37,7 @@ abstract class AbstractSpecification implements
         return [];
     }
 
-    public function getProperties(): array
+    public function getAllProperties(): array
     {
         return array_merge($this->getRequiredProperties(), $this->getOptionalProperties());
     }
@@ -57,7 +57,7 @@ abstract class AbstractSpecification implements
         return $this->isRequiredProperty($name) || $this->isOptionalProperty($name);
     }
 
-    public function assertPropertyExists(string $name): void
+    protected function assertPropertyExists(string $name): void
     {
         if (false === $this->isProperty($name)) {
             $message = sprintf('Class "%s" doesn\'t have a property called "%s".', get_class($this), $name);
@@ -65,7 +65,7 @@ abstract class AbstractSpecification implements
         }
     }
 
-    public function assertPropertyNullable(string $name, $value): void
+    protected function assertPropertyNullable(string $name, $value): void
     {
         if (null === $value && $this->isRequiredProperty($name)) {
             $message = sprintf('Property "%s" of class "%s" can\'t bel "null".', $name, get_class($this));
@@ -73,12 +73,12 @@ abstract class AbstractSpecification implements
         }
     }
 
-    public function assertPropertyType(string $name, $value): void
+    protected function assertPropertyType(string $name, $value): void
     {
         $this->assertPropertyExists($name);
         $this->assertPropertyNullable($name, $value);
 
-        $expected = explode('|', $this->getProperties()[$name]);
+        $expected = explode('|', $this->getAllProperties()[$name]);
         $type = gettype($value);
 
         if (null === $value || in_array($type, $expected) || in_array('mixed', $expected)) {
@@ -139,6 +139,58 @@ abstract class AbstractSpecification implements
         return json_encode($this, JSON_PRETTY_PRINT);
     }
 
+    protected function assertMethodExists(string $name): void
+    {
+        $action = substr($name, 0, 3);
+        $property = lcfirst(substr($name, 3));
+
+        try {
+            $this->assertPropertyExists($property);
+
+            if ('add' === $action) {
+                $this->assertIsArrayable();
+            }
+
+            if (false === in_array($action, ['get', 'set', 'add'])) {
+                throw new InvalidArgumentException();
+            }
+        } catch (InvalidArgumentException $e) {
+            $message = sprintf('Method "%s" not found in class "%s".', $name, get_class($this));
+            throw new InvalidArgumentException($message);
+        }
+    }
+
+    public function __call(string $name, array $arguments): mixed
+    {
+        $this->assertMethodExists($name);
+
+        $action = substr($name, 0, 3);
+        $property = lcfirst(substr($name, 3));
+
+        if ('get' === $action) {
+            return $this->properties[$property] ?? null;
+        }
+
+        if (1 > count($arguments)) {
+            $message = sprintf('Method "%s" of class "%s" requires at least 1 argument.', $name, get_class($this));
+            throw new InvalidArgumentException($message);
+        }
+
+        $value = $arguments[0];
+
+        if ('add' === $action) {
+            $this->assertArrayableType($value);
+            $this->properties[] = $value;
+
+            return $this->add($value);
+        }
+
+        $this->assertPropertyType($name, $value);
+        $this->properties[$property] = $value;
+
+        return $this;
+    }
+
     public function __set($name, $value): void
     {
         $this->assertPropertyType($name, $value);
@@ -150,16 +202,6 @@ abstract class AbstractSpecification implements
         $this->assertPropertyExists($name);
 
         return $this->properties[$name] ?? null;
-    }
-
-    public function __isset($name): bool
-    {
-        return isset($this->properties[$name]);
-    }
-
-    public function __unset($name): void
-    {
-        unset($this->properties[$name]);
     }
 
     public function count(): int
@@ -182,15 +224,15 @@ abstract class AbstractSpecification implements
         return $this->properties[$offset];
     }
 
-    public function assertIsArrayable(): void
+    protected function assertIsArrayable(): void
     {
-        if (count($this->getProperties())) {
+        if (count($this->getAllProperties())) {
             $message = sprintf('Class "%s" can\'t be used as an array.', get_class($this));
             throw new InvalidArgumentException($message);
         }
     }
 
-    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    protected function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
     {
         $acceptables = explode('|', $type);
 

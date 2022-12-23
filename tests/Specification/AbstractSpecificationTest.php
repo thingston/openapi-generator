@@ -21,13 +21,15 @@ abstract class AbstractSpecificationTest extends AbstractTestCase
 
         foreach ($specification->getRequiredProperties() as $name => $type) {
             $this->assertArrayHasKey($name, $data);
-            $this->assertSame($type, $specification->getProperties()[$name]);
-            $this->assertSame($data[$name], $specification->$name);
+            $this->assertSame($type, $specification->getAllProperties()[$name]);
+            $method = 'get' . ucfirst($name);
+            $this->assertSame($data[$name], $specification->$method());
         }
 
         foreach ($specification->getOptionalProperties() as $name => $type) {
             $this->assertArrayNotHasKey($name, $data);
-            $this->assertNull($specification->$name);
+            $method = 'get' . ucfirst($name);
+            $this->assertNull($specification->$method());
         }
     }
 
@@ -38,10 +40,11 @@ abstract class AbstractSpecificationTest extends AbstractTestCase
 
         $this->assertCount(count($data), $specification);
 
-        foreach ($specification->getProperties() as $name => $type) {
+        foreach ($specification->getAllProperties() as $name => $type) {
             $this->assertArrayHasKey($name, $data);
-            $this->assertSame($type, $specification->getProperties()[$name]);
-            $this->assertSame($data[$name], $specification->$name);
+            $this->assertSame($type, $specification->getAllProperties()[$name]);
+            $method = 'get' . ucfirst($name);
+            $this->assertSame($data[$name], $specification->$method());
         }
     }
 
