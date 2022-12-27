@@ -12,16 +12,12 @@ final class LicenseTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $license = new License('License name');
-
-        return $license;
+        return new License('License name');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $license = new License('License name');
-        $license->url = new Url('http://example.org/license');
-
-        return $license;
+        return (new License('License name'))
+            ->setUrl(new Url('http://example.org/license'));
     }
 }

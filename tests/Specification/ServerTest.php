@@ -12,16 +12,12 @@ final class ServerTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $server = new Server(new Url('http://example.org'));
-
-        return $server;
+        return new Server(new Url('http://example.org'));
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $server = new Server(new Url('http://example.org'));
-        $server->description = 'Server description';
-
-        return $server;
+        return (new Server(new Url('http://example.org')))
+            ->setDescription('Some description');
     }
 }

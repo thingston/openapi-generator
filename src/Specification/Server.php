@@ -5,8 +5,14 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * @property Url $url
- * @property string|null $description
+ * An object representing a Server.
+ *
+ * @link https://swagger.io/specification/#server-object
+ *
+ * @method Url getUrl()
+ * @method Server setUrl(Url $url)
+ * @method string|null getDescription()
+ * @method Server setDescription(?string $description)
  */
 final class Server extends AbstractSpecification
 {

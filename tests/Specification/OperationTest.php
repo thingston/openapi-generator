@@ -15,21 +15,16 @@ final class OperationTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $operation = new Operation(new Responses());
-
-        return $operation;
+        return new Operation(new Responses());
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $operation = new Operation(new Responses());
-        $operation->tags = ['a', 'b'];
-        $operation->summary = 'Some summary';
-        $operation->description = 'Some description';
-        $operation->externalDocs = new ExternalDocumentation(new Url('http://example.org/docs'));
-        $operation->operationId = 'zah123';
-        $operation->parameters = new Parameters();
-
-        return $operation;
+        return (new Operation(new Responses()))
+            ->setSummary('Some summary')
+            ->setDescription('Some description')
+            ->setExternalDocs(new ExternalDocumentation(new Url('http://example.org/docs')))
+            ->setOperationId('zah123')
+            ->setParameters(new Parameters());
     }
 }

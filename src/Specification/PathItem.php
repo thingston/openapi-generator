@@ -5,18 +5,36 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * @property string|null $summary
- * @property string|null $description
- * @property Operation|Reference|null $get
- * @property Operation|Reference|null $post
- * @property Operation|Reference|null $put
- * @property Operation|Reference|null $patch
- * @property Operation|Reference|null $delete
- * @property Operation|Reference|null $options
- * @property Operation|Reference|null $head
- * @property Operation|Reference|null $trace
- * @property Servers|null $servers
- * @property Parameters|null $parameters
+ * Describes the operations available on a single path. A Path Item MAY be empty,
+ * due to ACL constraints. The path itself is still exposed to the documentation
+ * viewer but they will not know which operations and parameters are available.
+ *
+ * @link https://swagger.io/specification/#path-item-object
+ *
+ * @method string|null getSummary()
+ * @method PathItem setSummary(?string $summary)
+ * @method string|null getDescription()
+ * @method PathItem setDescription(?string $description)
+ * @method Operation|null getGet()
+ * @method PathItem setGet(?Operation $get)
+ * @method Operation|null getPost()
+ * @method PathItem setPost(?Operation $post)
+ * @method Operation|null getPut()
+ * @method PathItem setPut(?Operation $put)
+ * @method Operation|null getPatch()
+ * @method PathItem setPatch(?Operation $patch)
+ * @method Operation|null getDelete()
+ * @method PathItem setDelete(?Operation $delete)
+ * @method Operation|null getOptions()
+ * @method PathItem setOptions(?Operation $options)
+ * @method Operation|null getHead()
+ * @method PathItem setHead(?Operation $head)
+ * @method Operation|null getTrace()
+ * @method PathItem setTrace(?Operation $trace)
+ * @method Servers|null getServers()
+ * @method PathItem setServers(?Servers $servers)
+ * @method Parameters|null getParameters()
+ * @method PathItem setParameters(?Parameters $parameters)
  */
 final class PathItem extends AbstractSpecification
 {

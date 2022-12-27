@@ -145,7 +145,9 @@ abstract class AbstractSpecification implements
         $property = lcfirst(substr($name, 3));
 
         try {
-            $this->assertPropertyExists($property);
+            if (in_array($action, ['get', 'set'])) {
+                $this->assertPropertyExists($property);
+            }
 
             if ('add' === $action) {
                 $this->assertIsArrayable();
@@ -189,19 +191,6 @@ abstract class AbstractSpecification implements
         $this->properties[$property] = $value;
 
         return $this;
-    }
-
-    public function __set($name, $value): void
-    {
-        $this->assertPropertyType($name, $value);
-        $this->properties[$name] = $value;
-    }
-
-    public function __get($name)
-    {
-        $this->assertPropertyExists($name);
-
-        return $this->properties[$name] ?? null;
     }
 
     public function count(): int

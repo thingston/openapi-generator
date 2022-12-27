@@ -12,16 +12,12 @@ final class ExternalDocumentationTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $externalDocs = new ExternalDocumentation(new Url('http://example.org/docs'));
-
-        return $externalDocs;
+        return new ExternalDocumentation(new Url('http://example.org/docs'));
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $externalDocs = new ExternalDocumentation(new Url('http://example.org/docs'));
-        $externalDocs->description = 'Some description';
-
-        return $externalDocs;
+        return (new ExternalDocumentation(new Url('http://example.org/docs')))
+            ->setDescription('Some description');
     }
 }

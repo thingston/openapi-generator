@@ -12,18 +12,14 @@ final class ExampleTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $example = new Example('name', ['foo' => 'bar']);
-
-        return $example;
+        return new Example('name', ['foo' => 'bar']);
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $example = new Example('name', ['foo' => 'bar']);
-        $example->summary = 'Some summary';
-        $example->description = 'Some description';
-        $example->externalValue = new Url('http://example.org/example');
-
-        return $example;
+        return (new Example('name', ['foo' => 'bar']))
+            ->setSummary('Some summary')
+            ->setDescription('Some description')
+            ->setExternalValue(new Url('http://example.org/example'));
     }
 }

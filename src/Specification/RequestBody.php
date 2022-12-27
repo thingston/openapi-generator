@@ -7,9 +7,14 @@ namespace Thingston\OpenApi\Specification;
 /**
  * Describes a single request body.
  *
- * @property MediaTypes $content
- * @property string|null $description
- * @property boolean|null $required
+ * @link https://swagger.io/specification/#request-body-object
+ *
+ * @method MediaTypes getContent()
+ * @method RequestBody setContent(MediaTypes $content)
+ * @method string|null getDescription()
+ * @method RequestBody setDescription(?string $description)
+ * @method bool|null getRequired()
+ * @method RequestBody setRequired(?bool $description)
  */
 final class RequestBody extends AbstractSpecification
 {

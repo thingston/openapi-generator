@@ -5,9 +5,16 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * @property string $name
- * @property Url|null $url
- * @property Email|null $email
+ * Contact information for the exposed API.
+ *
+ * @link https://swagger.io/specification/#contact-object
+ *
+ * @method string getName()
+ * @method Contact setName(string $name)
+ * @method Url|null getUrl()
+ * @method Contact setUrl(?Url $url)
+ * @method Email|null getEmail()
+ * @method Contact setEmail(?Email $email)
  */
 final class Contact extends AbstractSpecification
 {

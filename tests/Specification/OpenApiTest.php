@@ -17,18 +17,14 @@ final class OpenApiTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $api = new OpenApi(new Info('API title', '1.0'), new Paths());
-
-        return $api;
+        return new OpenApi(new Info('API title', '1.0'), new Paths());
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $api = new OpenApi(new Info('API title', '1.0'), new Paths());
-        $api->servers = new Servers();
-        $api->components = new Components();
-        $api->externalDocs = new ExternalDocumentation(new Url('http://example.org/docs'));
-
-        return $api;
+        return (new OpenApi(new Info('API title', '1.0'), new Paths()))
+            ->setServers(new Servers())
+            ->setComponents(new Components())
+            ->setExternalDocs(new ExternalDocumentation(new Url('http://example.org/docs')));
     }
 }

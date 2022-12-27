@@ -7,24 +7,20 @@ namespace Thingston\OpenApi\Test\Specification;
 use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\Examples;
 use Thingston\OpenApi\Specification\MediaType;
-use Thingston\OpenApi\Specification\Reference;
+use Thingston\OpenApi\Specification\StringSchema;
 
 final class MediaTypeTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $mediaType = new MediaType();
-
-        return $mediaType;
+        return new MediaType();
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $mediaType = new MediaType();
-        $mediaType->schema = new Reference('name', '#/components/schemas/Foo');
-        $mediaType->example = ['foo' => 'bar'];
-        $mediaType->examples = new Examples();
-
-        return $mediaType;
+        return (new MediaType())
+            ->setSchema(new StringSchema('application/json'))
+            ->setExample(['foo' => 'bar'])
+            ->setExamples(new Examples());
     }
 }

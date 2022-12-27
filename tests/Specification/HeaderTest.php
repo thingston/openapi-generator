@@ -12,20 +12,16 @@ final class HeaderTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $header = new Header('Content-Type');
-
-        return $header;
+        return new Header('Content-Type');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $header = new Header('Content-Type');
-        $header->description = 'Some description';
-        $header->schema = new StringSchema($header->key);
-        $header->required = true;
-        $header->deprecated = false;
-        $header->allowEmptyValue = false;
-
-        return $header;
+        return (new Header('Content-Type'))
+            ->setSchema(new StringSchema('Content-Type'))
+            ->setDescription('Some description')
+            ->setRequired(true)
+            ->setDeprecated(false)
+            ->setAllowEmptyValue(false);
     }
 }

@@ -5,8 +5,14 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * @property string $name
- * @property Url|null $url
+ * License information for the exposed API.
+ *
+ * @link https://swagger.io/specification/#license-object
+ *
+ * @method string getName()
+ * @method License setName(string $name)
+ * @method Url|null getUrl()
+ * @method License setUrl(?Url $url)
  */
 final class License extends AbstractSpecification
 {

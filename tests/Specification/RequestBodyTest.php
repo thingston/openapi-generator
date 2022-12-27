@@ -12,17 +12,13 @@ final class RequestBodyTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $requestBody = new RequestBody(new MediaTypes());
-
-        return $requestBody;
+        return new RequestBody(new MediaTypes());
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $requestBody = new RequestBody(new MediaTypes());
-        $requestBody->description = 'Some description';
-        $requestBody->required = false;
-
-        return $requestBody;
+        return (new RequestBody(new MediaTypes()))
+            ->setDescription('Some description')
+            ->setRequired(true);
     }
 }

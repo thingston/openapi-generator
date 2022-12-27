@@ -11,9 +11,7 @@ final class ReferenceTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $reference = new Reference('name', '#/components/schemas/Foo');
-
-        return $reference;
+        return new Reference('name', '#/components/schemas/Foo');
     }
 
     public function createFullSpecification(): AbstractSpecification

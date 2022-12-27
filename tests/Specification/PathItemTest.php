@@ -15,27 +15,23 @@ final class PathItemTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $pathItem = new PathItem('/');
-
-        return $pathItem;
+        return new PathItem('/');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $pathItem = new PathItem('/');
-        $pathItem->summary = 'Some summary';
-        $pathItem->description = 'Some description';
-        $pathItem->get = new Operation(new Responses());
-        $pathItem->post = new Operation(new Responses());
-        $pathItem->put = new Operation(new Responses());
-        $pathItem->patch = new Operation(new Responses());
-        $pathItem->delete = new Operation(new Responses());
-        $pathItem->head = new Operation(new Responses());
-        $pathItem->options = new Operation(new Responses());
-        $pathItem->trace = new Operation(new Responses());
-        $pathItem->servers = new Servers();
-        $pathItem->parameters = new Parameters();
-
-        return $pathItem;
+        return (new PathItem('/'))
+            ->setSummary('Some summary')
+            ->setDescription('Some description')
+            ->setGet(new Operation(new Responses()))
+            ->setPost(new Operation(new Responses()))
+            ->setPut(new Operation(new Responses()))
+            ->setPatch(new Operation(new Responses()))
+            ->setDelete(new Operation(new Responses()))
+            ->setHead(new Operation(new Responses()))
+            ->setOptions(new Operation(new Responses()))
+            ->setTrace(new Operation(new Responses()))
+            ->setServers(new Servers())
+            ->setParameters(new Parameters());
     }
 }

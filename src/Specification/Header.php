@@ -9,11 +9,16 @@ namespace Thingston\OpenApi\Specification;
  *
  * @link https://swagger.io/specification/#header-object
  *
- * @property string|null $description
- * @property Schema|Reference|null $schema
- * @property bool|null $required
- * @property bool|null $deprecated
- * @property bool|null $allowEmptyValue
+ * @method string|null getDescription()
+ * @method Header setDescription(?string $description)
+ * @method Schema|Reference|null getSchema()
+ * @method Header setSchema(Schema|Reference|null $schema)
+ * @method bool|null getRequired()
+ * @method Header setRequired(?bool $required)
+ * @method bool|null getDeprecated()
+ * @method Header setDeprecated(?bool $deprecated)
+ * @method bool|null getAllowEmptyValue()
+ * @method Header setAllowEmptyValue(?bool $allowEmptyValue)
  */
 final class Header extends AbstractSpecification
 {

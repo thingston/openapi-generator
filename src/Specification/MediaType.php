@@ -5,9 +5,17 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * @property Schema|Reference|null $schema
- * @property mixed $example
- * @property Examples|null $examples
+ * Each Media Type Object provides schema and examples for the media type
+ * identified by its key.
+ *
+ * @link https://swagger.io/specification/#media-type-object
+ *
+ * @method Schema|Reference|null getSchema()
+ * @method MediaType setSchema(Schema|Reference|null $schema)
+ * @method mixed getExample()
+ * @method MediaType setExample($example)
+ * @method Examples|null getExamples()
+ * @method MediaType setExamples(?Examples $examples)
  */
 final class MediaType extends AbstractSpecification
 {

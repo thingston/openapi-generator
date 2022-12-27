@@ -13,18 +13,14 @@ final class ServersTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $servers = new Servers();
-
-        return $servers;
+        return new Servers();
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $servers = new Servers([
+        return $servers = new Servers([
             new Server(new Url('http://localhost/api')),
             new Server(new Url('http://example.org/api')),
         ]);
-
-        return $servers;
     }
 }

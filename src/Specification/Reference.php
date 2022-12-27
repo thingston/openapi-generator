@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * @property string $ref
+ * A simple object to allow referencing other components in the specification,
+ * internally and externally.
+ *
+ * @link https://swagger.io/specification/#reference-object
  */
 final class Reference extends AbstractSpecification
 {
-    public function __construct(public string $name, string $ref)
+    public function __construct(string $key, string $ref)
     {
-        $this->name = $name;
+        $this->key = $key;
         $this->properties['$ref'] = $ref;
     }
 
@@ -20,5 +23,17 @@ final class Reference extends AbstractSpecification
         return [
             '$ref' => 'string',
         ];
+    }
+
+    public function getReference(): string
+    {
+        return $this->properties['$ref'];
+    }
+
+    public function setReference(string $ref): self
+    {
+        $this->properties['$ref'] = $ref;
+
+        return $this;
     }
 }

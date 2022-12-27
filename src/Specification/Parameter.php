@@ -5,12 +5,22 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * @property string $name
- * @property string $in
- * @property string|null $description
- * @property bool|null $required
- * @property bool|null $deprecated
- * @property bool|null $allowEmptyValue
+ * Describes a single operation parameter.
+ *
+ * @link https://swagger.io/specification/#parameter-object
+ *
+ * @method string getName()
+ * @method Parameter setName(string $name)
+ * @method string getIn()
+ * @method Parameter setIn(Parameter::IN_* $in)
+ * @method string|null getDescription()
+ * @method Parameter setDescription(?string $description)
+ * @method bool|null getRequired()
+ * @method Parameter setRequired(?bool $required)
+ * @method bool|null getDeprecated()
+ * @method Parameter setDeprecated(?bool $deprecated)
+ * @method bool|null getAllowEmptyValue()
+ * @method Parameter setAllowEmptyValue(?bool $allowEmptyValue)
  */
 final class Parameter extends AbstractSpecification
 {

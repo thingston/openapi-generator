@@ -11,19 +11,15 @@ final class ParameterTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $parameter = new Parameter('foo', Parameter::IN_COOKIE);
-
-        return $parameter;
+        return new Parameter('foo', Parameter::IN_COOKIE);
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $parameter = new Parameter('foo', Parameter::IN_QUERY);
-        $parameter->description = 'Some description';
-        $parameter->required = true;
-        $parameter->deprecated = false;
-        $parameter->allowEmptyValue = false;
-
-        return $parameter;
+        return (new Parameter('foo', Parameter::IN_COOKIE))
+            ->setDescription('Some description')
+            ->setRequired(true)
+            ->setDeprecated(false)
+            ->setAllowEmptyValue(false);
     }
 }

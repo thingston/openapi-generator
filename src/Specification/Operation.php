@@ -5,13 +5,22 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * @property Responses $responses
- * @property array|null $tags
- * @property string|null $summary
- * @property string|null $description
- * @property ExternalDocumentation|null $externalDocs
- * @property string|null $operationId
- * @property Parameters|null $parameters
+ * Describes a single API operation on a path.
+ *
+ * @link https://swagger.io/specification/#operation-object
+ *
+ * @method Responses getResponses()
+ * @method Operation setResponses(Responses $responses)
+ * @method string|null getSummary()
+ * @method Operation setSummary(?string $summary)
+ * @method string|null getDescription()
+ * @method Operation setDescription(?string $description)
+ * @method ExternalDocumentation|null getExternalDocs()
+ * @method Operation setExternalDocs(?ExternalDocumentation $externalDocs)
+ * @method string|null getOperationId()
+ * @method Operation setOperationId(?string $operationId)
+ * @method Parameters|null getParameters()
+ * @method Operation setParameters(?Parameters $parameters)
  */
 final class Operation extends AbstractSpecification
 {
@@ -30,7 +39,6 @@ final class Operation extends AbstractSpecification
     public function getOptionalProperties(): array
     {
         return [
-            'tags' => 'array',
             'summary' => 'string',
             'description' => 'string',
             'externalDocs' => ExternalDocumentation::class,

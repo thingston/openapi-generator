@@ -9,12 +9,18 @@ namespace Thingston\OpenApi\Specification;
  *
  * @license https://swagger.io/specification/#info-object
  *
- * @property string $title
- * @property string $version
- * @property string|null $description
- * @property Url|null $termsOfService
- * @property Contact|null $contact
- * @property License|null $license
+ * @method string getTitle()
+ * @method Info setTitle(string $title)
+ * @method string getVersion()
+ * @method Info setVersion(string $version)
+ * @method string|null getDescription()
+ * @method Info setDescription(?string $description)
+ * @method Url|null getTermsOfService()
+ * @method Info setTermsOfService(?Url $termsOfService)
+ * @method Contact|null getContact()
+ * @method Info setContact(?Contact $contact)
+ * @method License|null getLicense()
+ * @method Info setLicense(?License $license)
  */
 final class Info extends AbstractSpecification
 {

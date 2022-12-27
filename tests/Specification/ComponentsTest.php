@@ -17,21 +17,17 @@ final class ComponentsTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $components = new Components();
-
-        return $components;
+        return new Components();
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $components = new Components();
-        $components->schemas = new Schemas();
-        $components->responses = new Responses();
-        $components->parameters = new Parameters();
-        $components->examples = new Examples();
-        $components->requestBodies = new RequestBodies();
-        $components->headers = new Headers();
-
-        return $components;
+        return (new Components())
+            ->setSchemas(new Schemas())
+            ->setResponses(new Responses())
+            ->setParameters(new Parameters())
+            ->setRequestBodies(new RequestBodies())
+            ->setExamples(new Examples())
+            ->setHeaders(new Headers());
     }
 }

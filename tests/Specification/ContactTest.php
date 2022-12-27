@@ -13,17 +13,13 @@ final class ContactTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $contact = new Contact('Contact name');
-
-        return $contact;
+        return new Contact('Contact name');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $contact = new Contact('Contact name');
-        $contact->url = new Url('http://example.org/contact');
-        $contact->email = new Email('contact@example.org');
-
-        return $contact;
+        return (new Contact('Contact name'))
+            ->setUrl(new Url('http://example.org/contact'))
+            ->setEmail(new Email('contact@example.org'));
     }
 }

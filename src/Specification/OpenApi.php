@@ -9,12 +9,18 @@ namespace Thingston\OpenApi\Specification;
  *
  * @link https://swagger.io/specification/#openapi-object
  *
- * @property string $openapi
- * @property Info $info
- * @property Paths $paths
- * @property Servers|null $servers
- * @property Components|null $components
- * @property ExternalDocumentation|null $externalDocs
+ * @method string getOpenapi()
+ * @method OpenApi setOpenapi(string $openapi)
+ * @method Info getInfo()
+ * @method OpenApi setInfo(Info $info)
+ * @method Paths getPaths()
+ * @method OpenApi setPaths(Paths $paths)
+ * @method Servers|null getServers()
+ * @method OpenApi setServers(?Servers $servers)
+ * @method Components|null getComponents()
+ * @method OpenApi setComponents(?Components $components)
+ * @method ExternalDocumentation|null getExternalDocs()
+ * @method OpenApi setExternalDocs(?ExternalDocumentation $externalDocumentation)
  *
  * @todo security
  * @todo tags

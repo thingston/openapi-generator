@@ -14,19 +14,15 @@ final class InfoTest extends AbstractSpecificationTest
 {
     public function createMinimalSpecification(): AbstractSpecification
     {
-        $info = new Info('API title', '1.0');
-
-        return $info;
+        return new Info('API title', '1.0');
     }
 
     public function createFullSpecification(): AbstractSpecification
     {
-        $info = new Info('API title', '1.0');
-        $info->description = 'Some description';
-        $info->termsOfService = new Url('http://example.org/terms');
-        $info->contact = new Contact('Contact name');
-        $info->license = new License('License name');
-
-        return $info;
+        return (new Info('API title', '1.0'))
+            ->setDescription('Some description')
+            ->setTermsOfService(new Url('http://example.org/terms'))
+            ->setContact(new Contact('Contact name'))
+            ->setLicense(new License('License name'));
     }
 }
