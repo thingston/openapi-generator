@@ -11,6 +11,7 @@ use JsonSerializable;
 use Stringable;
 use Thingston\OpenApi\Exception\InvalidArgumentException;
 use Traversable;
+
 use function count;
 use function json_encode;
 

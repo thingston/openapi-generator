@@ -13,6 +13,8 @@ namespace Thingston\OpenApi\Specification;
  * @method Server setUrl(Url $url)
  * @method string|null getDescription()
  * @method Server setDescription(?string $description)
+ * @method ServerVariables|null getVariables()
+ * @method Server setVariables(?ServerVariables $variables)
  */
 final class Server extends AbstractSpecification
 {
@@ -32,6 +34,7 @@ final class Server extends AbstractSpecification
     {
         return [
             'description' => 'string',
+            'variables' => ServerVariables::class,
         ];
     }
 }
