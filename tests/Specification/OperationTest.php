@@ -9,6 +9,8 @@ use Thingston\OpenApi\Specification\ExternalDocumentation;
 use Thingston\OpenApi\Specification\Operation;
 use Thingston\OpenApi\Specification\Parameters;
 use Thingston\OpenApi\Specification\Responses;
+use Thingston\OpenApi\Specification\SecurityRequirements;
+use Thingston\OpenApi\Specification\Tags;
 use Thingston\OpenApi\Specification\Url;
 
 final class OperationTest extends AbstractSpecificationTest
@@ -25,6 +27,8 @@ final class OperationTest extends AbstractSpecificationTest
             ->setDescription('Some description')
             ->setExternalDocs(new ExternalDocumentation(new Url('http://example.org/docs')))
             ->setOperationId('zah123')
-            ->setParameters(new Parameters());
+            ->setParameters(new Parameters())
+            ->setTags(new Tags())
+            ->setSecurity(new SecurityRequirements());
     }
 }

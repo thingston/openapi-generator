@@ -21,6 +21,10 @@ namespace Thingston\OpenApi\Specification;
  * @method Operation setOperationId(?string $operationId)
  * @method Parameters|null getParameters()
  * @method Operation setParameters(?Parameters $parameters)
+ * @method Tags|null getTags()
+ * @method Operation setTags(?Tags $tags)
+ * @method SecurityRequirements|null getSecurity()
+ * @method Operation setSecurity(?SecurityRequirements $security)
  */
 final class Operation extends AbstractSpecification
 {
@@ -44,6 +48,8 @@ final class Operation extends AbstractSpecification
             'externalDocs' => ExternalDocumentation::class,
             'operationId' => 'string',
             'parameters' => Parameters::class,
+            'tags' => Tags::class,
+            'security' => SecurityRequirements::class,
         ];
     }
 }

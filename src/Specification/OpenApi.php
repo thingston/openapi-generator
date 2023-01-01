@@ -21,9 +21,10 @@ namespace Thingston\OpenApi\Specification;
  * @method OpenApi setComponents(?Components $components)
  * @method ExternalDocumentation|null getExternalDocs()
  * @method OpenApi setExternalDocs(?ExternalDocumentation $externalDocumentation)
- *
- * @todo security
- * @todo tags
+ * @method Tags|null getTags()
+ * @method OpenApi setTags(?Tags $tags)
+ * @method SecurityRequirements|null getSecurity()
+ * @method OpenApi setSecurity(?SecurityRequirements $security)
  */
 final class OpenApi extends AbstractSpecification
 {
@@ -51,6 +52,8 @@ final class OpenApi extends AbstractSpecification
             'servers' => Servers::class,
             'components' => Components::class,
             'externalDocs' => ExternalDocumentation::class,
+            'tags' => Tags::class,
+            'security' => SecurityRequirements::class,
         ];
     }
 }

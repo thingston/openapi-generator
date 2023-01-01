@@ -10,7 +10,9 @@ use Thingston\OpenApi\Specification\ExternalDocumentation;
 use Thingston\OpenApi\Specification\Info;
 use Thingston\OpenApi\Specification\OpenApi;
 use Thingston\OpenApi\Specification\Paths;
+use Thingston\OpenApi\Specification\SecurityRequirements;
 use Thingston\OpenApi\Specification\Servers;
+use Thingston\OpenApi\Specification\Tags;
 use Thingston\OpenApi\Specification\Url;
 
 final class OpenApiTest extends AbstractSpecificationTest
@@ -25,6 +27,8 @@ final class OpenApiTest extends AbstractSpecificationTest
         return (new OpenApi(new Info('API title', '1.0'), new Paths()))
             ->setServers(new Servers())
             ->setComponents(new Components())
-            ->setExternalDocs(new ExternalDocumentation(new Url('http://example.org/docs')));
+            ->setExternalDocs(new ExternalDocumentation(new Url('http://example.org/docs')))
+            ->setTags(new Tags())
+            ->setSecurity(new SecurityRequirements());
     }
 }
