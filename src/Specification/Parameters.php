@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
+/**
+ * An array of parameter objects.
+ *
+ * @method Parameters addParameter(Parameter $parameter)
+ */
 final class Parameters extends AbstractSpecification
 {
     public function __construct(array $parameters = [])
     {
         foreach ($parameters as $parameter) {
-            $this->add($parameter);
+            $this->addParameter($parameter);
         }
     }
 

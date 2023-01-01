@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
+/**
+ * An array of example objects.
+ *
+ * @method Examples addExample(Example $example)
+ */
 final class Examples extends AbstractSpecification
 {
     public function __construct(array $examples = [])
     {
         foreach ($examples as $example) {
-            $this->add($example);
+            $this->addExample($example);
         }
     }
 

@@ -18,7 +18,7 @@ final class ServersTest extends AbstractSpecificationTest
 
     public function createFullSpecification(): AbstractSpecification
     {
-        return $servers = new Servers([
+        return new Servers([
             new Server(new Url('http://localhost/api')),
             new Server(new Url('http://example.org/api')),
         ]);

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
-use ArrayAccess;
 use ArrayObject;
 use Countable;
 use IteratorAggregate;
@@ -12,7 +11,6 @@ use JsonSerializable;
 use Stringable;
 use Thingston\OpenApi\Exception\InvalidArgumentException;
 use Traversable;
-
 use function count;
 use function json_encode;
 
@@ -21,8 +19,7 @@ abstract class AbstractSpecification implements
     JsonSerializable,
     Stringable,
     Countable,
-    IteratorAggregate,
-    ArrayAccess
+    IteratorAggregate
 {
     public ?string $key = null;
     protected array $properties = [];
@@ -181,10 +178,12 @@ abstract class AbstractSpecification implements
         $value = $arguments[0];
 
         if ('add' === $action) {
+            $this->assertIsArrayable();
             $this->assertArrayableType($value);
+
             $this->properties[] = $value;
 
-            return $this->add($value);
+            return $this;
         }
 
         $this->assertPropertyType($property, $value);
@@ -201,16 +200,6 @@ abstract class AbstractSpecification implements
     public function getIterator(): Traversable
     {
         return new ArrayObject($this->properties);
-    }
-
-    public function offsetExists($offset): bool
-    {
-        return isset($this->properties[$offset]);
-    }
-
-    public function offsetGet($offset): mixed
-    {
-        return $this->properties[$offset];
     }
 
     protected function assertIsArrayable(): void
@@ -238,31 +227,5 @@ abstract class AbstractSpecification implements
         );
 
         throw new InvalidArgumentException($message);
-    }
-
-    public function offsetSet($offset, $value): void
-    {
-        if (is_string($offset)) {
-            $this->$offset = $value;
-
-            return;
-        }
-
-        $this->add($value);
-    }
-
-    public function offsetUnset($offset): void
-    {
-        unset($this->properties[$offset]);
-    }
-
-    public function add(AbstractSpecification $specification): self
-    {
-        $this->assertIsArrayable();
-        $this->assertArrayableType($specification);
-
-        $this->properties[] = $specification;
-
-        return $this;
     }
 }

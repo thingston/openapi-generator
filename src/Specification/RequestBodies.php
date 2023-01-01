@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
+/**
+ * An array of requestBody objects.
+ *
+ * @method RequestBodies addRequestBody(RequestBody $requestBody)
+ */
 final class RequestBodies extends AbstractSpecification
 {
     public function __construct(array $requestBodies = [])
     {
         foreach ($requestBodies as $requestBody) {
-            $this->add($requestBody);
+            $this->addRequestBody($requestBody);
         }
     }
 

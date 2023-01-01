@@ -17,7 +17,7 @@ final class TagsTest extends AbstractSpecificationTest
 
     public function createFullSpecification(): AbstractSpecification
     {
-        return $tags = new Tags([
+        return new Tags([
             new Tag('foo'),
             new Tag('bar'),
         ]);

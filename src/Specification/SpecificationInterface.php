@@ -12,6 +12,5 @@ interface SpecificationInterface
     public function isRequiredProperty(string $name): bool;
     public function isOptionalProperty(string $name): bool;
     public function isProperty(string $name): bool;
-    public function add(AbstractSpecification $specification): self;
     public function toArray(): array;
 }
