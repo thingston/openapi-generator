@@ -19,6 +19,7 @@ final class NullSchemaTest extends AbstractSpecificationTest
         return $schema = (new NullSchema('name'))
             ->setTitle('Schema title')
             ->setDescription('Some description')
-            ->setNullable(false);
+            ->setNullable(false)
+            ->setExample(null);
     }
 }

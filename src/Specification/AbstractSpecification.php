@@ -37,7 +37,9 @@ abstract class AbstractSpecification implements
 
     public static function create(array $arguments = []): self
     {
-        return new static(...$arguments);
+        $class = static::class;
+
+        return new $class(...$arguments);
     }
 
     public function getAllProperties(): array
@@ -118,7 +120,7 @@ abstract class AbstractSpecification implements
         $data = [];
 
         foreach ($this->properties as $name => $property) {
-            if (null === $property) {
+            if (null === $property && 'mixed' !== $this->getAllProperties()[$name]) {
                 continue;
             }
 

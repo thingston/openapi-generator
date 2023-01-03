@@ -22,6 +22,7 @@ final class StringSchemaTest extends AbstractSpecificationTest
             ->setPattern('/\w+/')
             ->setTitle('Schema title')
             ->setDescription('Some description')
-            ->setNullable(false);
+            ->setNullable(false)
+            ->setExample('foo');
     }
 }

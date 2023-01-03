@@ -24,6 +24,7 @@ final class NumericSchemaTest extends AbstractSpecificationTest
             ->setMultipleOf(5.0)
             ->setTitle('Schema title')
             ->setDescription('Some description')
-            ->setNullable(false);
+            ->setNullable(false)
+            ->setExample(12.5);
     }
 }

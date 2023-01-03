@@ -19,6 +19,7 @@ final class BooleanSchemaTest extends AbstractSpecificationTest
         return $schema = (new BooleanSchema('name'))
             ->setTitle('Schema title')
             ->setDescription('Some description')
-            ->setNullable(false);
+            ->setNullable(false)
+            ->setExample(true);
     }
 }

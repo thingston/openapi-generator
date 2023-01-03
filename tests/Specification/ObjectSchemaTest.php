@@ -25,6 +25,7 @@ final class ObjectSchemaTest extends AbstractSpecificationTest
             ->setAdditionalProperties(false)
             ->setTitle('Schema title')
             ->setDescription('Some description')
-            ->setNullable(false);
+            ->setNullable(false)
+            ->setExample(new \stdClass());
     }
 }

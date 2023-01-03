@@ -25,6 +25,7 @@ final class ArraySchemaTest extends AbstractSpecificationTest
             ->setUniqueItems(true)
             ->setTitle('Schema title')
             ->setDescription('Some description')
-            ->setNullable(false);
+            ->setNullable(false)
+            ->setExample(['foo', 'bar']);
     }
 }

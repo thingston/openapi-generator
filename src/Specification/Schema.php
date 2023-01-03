@@ -22,6 +22,8 @@ use Thingston\OpenApi\Exception\InvalidArgumentException;
  * @method Schema setDescription(?string $description)
  * @method boll|null getNullable()
  * @method Schema setNullable(?bool $nullable)
+ * @method mixed getExample()
+ * @method Schema setExample(mixed $example)
  */
 abstract class Schema extends AbstractSpecification
 {
@@ -72,6 +74,7 @@ abstract class Schema extends AbstractSpecification
             'title' => 'string',
             'description' => 'string',
             'nullable' => 'boolean',
+            'example' => 'mixed',
         ];
     }
 }
