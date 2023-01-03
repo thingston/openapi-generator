@@ -22,9 +22,41 @@ namespace Thingston\OpenApi\Specification;
  */
 final class NumericSchema extends Schema
 {
-    public function __construct(string $key)
-    {
-        parent::__construct($key, self::TYPE_NUMERIC);
+    public function __construct(
+        string $key,
+        ?float $minimum = null,
+        ?float $maximum = null,
+        ?bool $exclusiveMinimum = null,
+        ?bool $exclusiveMaximum = null,
+        $multipleOf = null,
+        ?string $title = null,
+        ?string $description = null,
+        ?bool $nullable = null,
+        $example = null
+    ) {
+        $this->assertPropertyType('multipleOf', $multipleOf);
+
+        parent::__construct($key, self::TYPE_NUMERIC, $title, $description, $nullable, $example);
+
+        if (null !== $minimum) {
+            $this->properties['minimum'] = $minimum;
+        }
+
+        if (null !== $maximum) {
+            $this->properties['maximum'] = $maximum;
+        }
+
+        if (null !== $exclusiveMinimum) {
+            $this->properties['exclusiveMinimum'] = $exclusiveMinimum;
+        }
+
+        if (null !== $exclusiveMaximum) {
+            $this->properties['exclusiveMaximum'] = $exclusiveMaximum;
+        }
+
+        if (null !== $multipleOf) {
+            $this->properties['multipleOf'] = $multipleOf;
+        }
     }
 
     public function getOptionalProperties(): array

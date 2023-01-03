@@ -35,12 +35,34 @@ abstract class Schema extends AbstractSpecification
     public const TYPE_ARRAY = 'array';
     public const TYPE_OBJECT = 'object';
 
-    public function __construct(string $key, string $type)
-    {
+    public function __construct(
+        string $key,
+        string $type,
+        ?string $title = null,
+        ?string $description = null,
+        ?bool $nullable = null,
+        $example = null
+    ) {
         $this->assertSchemaType($type);
 
         $this->key = $key;
         $this->properties['type'] = $type;
+
+        if (null !== $title) {
+            $this->properties['title'] = $title;
+        }
+
+        if (null !== $description) {
+            $this->properties['description'] = $description;
+        }
+
+        if (null !== $nullable) {
+            $this->properties['nullable'] = $nullable;
+        }
+
+        if (null !== $example) {
+            $this->properties['example'] = $example;
+        }
     }
 
     public function assertSchemaType(string $type): void

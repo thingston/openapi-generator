@@ -22,15 +22,47 @@ namespace Thingston\OpenApi\Specification;
  */
 final class ArraySchema extends Schema
 {
-    public function __construct(string $key)
-    {
-        parent::__construct($key, self::TYPE_ARRAY);
+    public function __construct(
+        string $key,
+        $items = null,
+        ?bool $additionalItems = null,
+        ?int $minItems = null,
+        ?int $maxItems = null,
+        ?bool $uniqueItems = null,
+        ?string $title = null,
+        ?string $description = null,
+        ?bool $nullable = null,
+        $example = null
+    ) {
+        $this->assertPropertyType('items', $items);
+
+        parent::__construct($key, self::TYPE_ARRAY, $title, $description, $nullable, $example);
+
+        if (null !== $items) {
+            $this->properties['items'] = $items;
+        }
+
+        if (null !== $additionalItems) {
+            $this->properties['additionalItems'] = $additionalItems;
+        }
+
+        if (null !== $minItems) {
+            $this->properties['minItems'] = $minItems;
+        }
+
+        if (null !== $maxItems) {
+            $this->properties['maxItems'] = $maxItems;
+        }
+
+        if (null !== $uniqueItems) {
+            $this->properties['uniqueItems'] = $uniqueItems;
+        }
     }
 
     public function getOptionalProperties(): array
     {
         return array_merge(parent::getOptionalProperties(), [
-            'items' => Schema::class,
+            'items' => implode('|', [Schema::class, Reference::class]),
             'additionalItems' => 'boolean',
             'minItems' => 'integer',
             'maxItems' => 'integer',

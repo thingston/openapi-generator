@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
+use Thingston\OpenApi\Exception\InvalidArgumentException;
 use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Test\AbstractTestCase;
 
@@ -48,9 +49,9 @@ abstract class AbstractSpecificationTest extends AbstractTestCase
         }
     }
 
-    public function testMinimalFactory(): void
+    public function testFactory(): void
     {
-        $specification = $this->createMinimalSpecification();
+        $specification = $this->createFullSpecification();
 
         $reflection = new \ReflectionClass(get_class($specification));
         $parameters = $reflection->getConstructor()?->getParameters() ?? [];
@@ -58,6 +59,12 @@ abstract class AbstractSpecificationTest extends AbstractTestCase
         $arguments = [];
 
         foreach ($parameters as $parameter) {
+            if ($specification->isProperty($parameter->name)) {
+                $method = 'get' . ucfirst($parameter->name);
+                $arguments[$parameter->name] = $specification->$method();
+                continue;
+            }
+
             if ($parameter->isDefaultValueAvailable()) {
                 $arguments[$parameter->name] = $parameter->getDefaultValue();
                 continue;
@@ -73,8 +80,13 @@ abstract class AbstractSpecificationTest extends AbstractTestCase
                 continue;
             }
 
-            $method = 'get' . ucfirst($parameter->name);
-            $arguments[$parameter->name] = $specification->$method();
+            $message = sprintf(
+                'Unable to set value for argument "%s" in "%s::__construct()".',
+                $parameter->name,
+                get_class($specification)
+            );
+
+            throw new InvalidArgumentException($message);
         }
 
         $this->assertSame(get_class($specification), get_class($specification::create($arguments)));

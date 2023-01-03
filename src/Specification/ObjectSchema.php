@@ -24,9 +24,41 @@ use Thingston\OpenApi\Exception\InvalidArgumentException;
  */
 final class ObjectSchema extends Schema
 {
-    public function __construct(string $key)
-    {
-        parent::__construct($key, self::TYPE_OBJECT);
+    public function __construct(
+        string $key,
+        ?array $required = null,
+        $properties = null,
+        ?bool $additionalProperties = null,
+        ?int $minProperties = null,
+        ?int $maxProperties = null,
+        ?string $title = null,
+        ?string $description = null,
+        ?bool $nullable = null,
+        $example = null
+    ) {
+     $this->assertPropertyNullable('properties', $properties);
+
+        parent::__construct($key, self::TYPE_OBJECT, $title, $description, $nullable, $example);
+
+        if (null !== $required) {
+            $this->properties['required'] = $required;
+        }
+
+        if (null !== $properties) {
+            $this->properties['properties'] = $properties;
+        }
+
+        if (null !== $additionalProperties) {
+            $this->properties['additionalProperties'] = $additionalProperties;
+        }
+
+        if (null !== $minProperties) {
+            $this->properties['minProperties'] = $minProperties;
+        }
+
+        if (null !== $maxProperties) {
+            $this->properties['maxProperties'] = $maxProperties;
+        }
     }
 
     public function getOptionalProperties(): array
