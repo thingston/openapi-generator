@@ -10,9 +10,12 @@ namespace Thingston\OpenApi\Specification;
  *
  * @link https://swagger.io/specification/#response-object
  *
- * @property string $description
- * @property Headers|null $description
- * @property MediaTypes|null $content
+ * @method string getDescription()
+ * @method Response setDescription(string $description)
+ * @method Headers|null getHeaders()
+ * @method Response setHeaders(?Headers $headers)
+ * @method MediaTypes|null getContent()
+ * @method Response setContent(?MediaTypes $content)
  */
 final class Response extends AbstractSpecification
 {
