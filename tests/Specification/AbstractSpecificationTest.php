@@ -48,6 +48,38 @@ abstract class AbstractSpecificationTest extends AbstractTestCase
         }
     }
 
+    public function testMinimalFactory(): void
+    {
+        $specification = $this->createMinimalSpecification();
+
+        $reflection = new \ReflectionClass(get_class($specification));
+        $parameters = $reflection->getConstructor()?->getParameters() ?? [];
+
+        $arguments = [];
+
+        foreach ($parameters as $parameter) {
+            if ($parameter->isDefaultValueAvailable()) {
+                $arguments[$parameter->name] = $parameter->getDefaultValue();
+                continue;
+            }
+
+            if ('key' === $parameter->name) {
+                $arguments['key'] = $specification->key;
+                continue;
+            }
+
+            if ('ref' === $parameter->name) {
+                $arguments['ref'] = '#/components/schemasss/Foo';
+                continue;
+            }
+
+            $method = 'get' . ucfirst($parameter->name);
+            $arguments[$parameter->name] = $specification->$method();
+        }
+
+        $this->assertSame(get_class($specification), get_class($specification::create($arguments)));
+    }
+
     public function testStringable(): void
     {
         $specification = $this->createFullSpecification();

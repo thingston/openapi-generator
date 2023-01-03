@@ -35,6 +35,11 @@ abstract class AbstractSpecification implements
         return [];
     }
 
+    public static function create(array $arguments = []): self
+    {
+        return new static(...$arguments);
+    }
+
     public function getAllProperties(): array
     {
         return array_merge($this->getRequiredProperties(), $this->getOptionalProperties());
