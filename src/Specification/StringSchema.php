@@ -18,9 +18,39 @@ namespace Thingston\OpenApi\Specification;
  */
 final class StringSchema extends Schema
 {
-    public function __construct(string $key)
+    public function __construct(
+        string $key,
+        ?int $minLength = null,
+        ?int $maxLength = null,
+        ?string $pattern = null,
+        ?string $title = null,
+        ?string $description = null,
+        ?bool $nullable = null,
+        $example = null
+    ) {
+        parent::__construct($key, self::TYPE_STRING, $title, $description, $nullable, $example);
+
+        if (null !== $minLength) {
+            $this->properties['minLength'] = $minLength;
+        }
+
+        if (null !== $maxLength) {
+            $this->properties['maxLength'] = $maxLength;
+        }
+
+        if (null !== $pattern) {
+            $this->properties['pattern'] = $pattern;
+        }
+    }
+
+    public static function create(string $key, ?string $title = null, array $options = []): self
     {
-        parent::__construct($key, self::TYPE_STRING);
+        $parameters = array_merge($options, [
+            'key' => $key,
+            'title' => $title,
+        ]);
+
+        return new self(...$parameters);
     }
 
     public function getOptionalProperties(): array

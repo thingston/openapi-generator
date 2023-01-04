@@ -59,6 +59,16 @@ final class IntegerSchema extends Schema
         }
     }
 
+    public static function create(string $key, ?string $title = null, array $options = []): self
+    {
+        $parameters = array_merge($options, [
+            'key' => $key,
+            'title' => $title,
+        ]);
+
+        return new self(...$parameters);
+    }
+
     public function getOptionalProperties(): array
     {
         return array_merge(parent::getOptionalProperties(), [

@@ -27,4 +27,26 @@ final class IntegerSchemaTest extends AbstractSpecificationTest
             ->setNullable(false)
             ->setExample(123);
     }
+
+    public function testFactory(): void
+    {
+        $key = 'foo';
+        $title = 'Some title';
+        $description = 'Some description';
+        $nullable = false;
+        $example = 123;
+
+        $schema = IntegerSchema::create($key, $title, [
+            'title' => 'Ignored title',
+            'description' => $description,
+            'nullable' => $nullable,
+            'example' => $example,
+        ]);
+
+        $this->assertSame($key, $schema->key);
+        $this->assertSame($title, $schema->getTitle());
+        $this->assertSame($description, $schema->getDescription());
+        $this->assertSame($nullable, $schema->getNullable());
+        $this->assertSame($example, $schema->getExample());
+    }
 }

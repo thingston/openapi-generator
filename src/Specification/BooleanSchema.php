@@ -20,4 +20,14 @@ final class BooleanSchema extends Schema
     ) {
         parent::__construct($key, self::TYPE_BOOLEAN, $title, $description, $nullable, $example);
     }
+
+    public static function create(string $key, ?string $title = null, array $options = []): self
+    {
+        $parameters = array_merge($options, [
+            'key' => $key,
+            'title' => $title,
+        ]);
+
+        return new self(...$parameters);
+    }
 }

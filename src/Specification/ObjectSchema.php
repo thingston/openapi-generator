@@ -36,7 +36,7 @@ final class ObjectSchema extends Schema
         ?bool $nullable = null,
         $example = null
     ) {
-     $this->assertPropertyNullable('properties', $properties);
+        $this->assertPropertyNullable('properties', $properties);
 
         parent::__construct($key, self::TYPE_OBJECT, $title, $description, $nullable, $example);
 
@@ -61,11 +61,28 @@ final class ObjectSchema extends Schema
         }
     }
 
+    public static function create(
+        string $key,
+        $properties = null,
+        ?array $required = null,
+        ?string $title = null,
+        array $options = []
+    ): self {
+        $parameters = array_merge($options, [
+            'key' => $key,
+            'properties' => $properties,
+            'required' => $required,
+            'title' => $title,
+        ]);
+
+        return new self(...$parameters);
+    }
+
     public function getOptionalProperties(): array
     {
         return array_merge(parent::getOptionalProperties(), [
             'required' => 'array',
-            'properties' => Schemas::class,
+            'properties' => implode('|', [Schemas::class, Reference::class]),
             'additionalProperties' => 'boolean',
             'minProperties' => 'integer',
             'maxProperties' => 'integer',

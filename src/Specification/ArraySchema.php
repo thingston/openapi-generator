@@ -59,6 +59,17 @@ final class ArraySchema extends Schema
         }
     }
 
+    public static function create(string $key, $items = null, ?string $title = null, array $options = []): self
+    {
+        $parameters = array_merge($options, [
+            'key' => $key,
+            'items' => $items,
+            'title' => $title,
+        ]);
+
+        return new self(...$parameters);
+    }
+
     public function getOptionalProperties(): array
     {
         return array_merge(parent::getOptionalProperties(), [
