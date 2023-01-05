@@ -38,9 +38,87 @@ namespace Thingston\OpenApi\Specification;
  */
 final class PathItem extends AbstractSpecification
 {
-    public function __construct(string $key)
+    public function __construct(
+        string $path,
+        ?string $summary = null,
+        ?string $description = null,
+        $get = null,
+        $post = null,
+        $put = null,
+        $patch = null,
+        $delete = null,
+        $options = null,
+        $head = null,
+        $trace = null,
+        $servers = null,
+        $parameters = null
+    ) {
+        $this->key = '/' . trim($path, '/');
+
+        if (null !== $summary) {
+            $this->properties['summary'] = $summary;
+        }
+
+        if (null !== $description) {
+            $this->properties['description'] = $description;
+        }
+
+        if (null !== $get) {
+            $this->properties['get'] = $get;
+        }
+
+        if (null !== $post) {
+            $this->properties['post'] = $post;
+        }
+
+        if (null !== $put) {
+            $this->properties['put'] = $put;
+        }
+
+        if (null !== $patch) {
+            $this->properties['patch'] = $patch;
+        }
+
+        if (null !== $delete) {
+            $this->properties['delete'] = $delete;
+        }
+
+        if (null !== $options) {
+            $this->properties['options'] = $options;
+        }
+
+        if (null !== $head) {
+            $this->properties['head'] = $head;
+        }
+
+        if (null !== $trace) {
+            $this->properties['trace'] = $trace;
+        }
+
+        if (null !== $servers) {
+            $this->properties['servers'] = $servers;
+        }
+
+        if (null !== $parameters) {
+            $this->properties['parameters'] = $parameters;
+        }
+    }
+
+    public static function create(string $path, array $options = []): self
     {
-        $this->key = '/' . trim($key, '/');
+        if (isset($options['servers']) && is_array($options['servers'])) {
+            $options['servers'] = new Servers($options['servers']);
+        }
+
+        if (isset($options['parameters']) && is_array($options['parameters'])) {
+            $options['parameters'] = new Parameters($options['parameters']);
+        }
+
+        $parameters = array_merge($options, [
+            'path' => $path,
+        ]);
+
+        return new self(...$parameters);
     }
 
     public function getOptionalProperties(): array

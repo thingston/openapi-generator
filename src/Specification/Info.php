@@ -24,10 +24,42 @@ namespace Thingston\OpenApi\Specification;
  */
 final class Info extends AbstractSpecification
 {
-    public function __construct(string $title, string $version)
-    {
+    public function __construct(
+        string $title,
+        string $version,
+        ?string $description = null,
+        ?Url $termsOfService = null,
+        ?Contact $contact = null,
+        ?License $license = null
+    ) {
         $this->properties['title'] = $title;
         $this->properties['version'] = $version;
+
+        if (null !== $description) {
+            $this->properties['description'] = $description;
+        }
+
+        if (null !== $termsOfService) {
+            $this->properties['termsOfService'] = $termsOfService;
+        }
+
+        if (null !== $contact) {
+            $this->properties['contact'] = $contact;
+        }
+
+        if (null !== $license) {
+            $this->properties['license'] = $license;
+        }
+    }
+
+    public static function create(string $title, string $version, array $options = []): self
+    {
+        $parameters = array_merge($options, [
+            'title' => $title,
+            'version' => $version,
+        ]);
+
+        return new self(...$parameters);
     }
 
     public function getRequiredProperties(): array

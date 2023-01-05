@@ -28,9 +28,66 @@ namespace Thingston\OpenApi\Specification;
  */
 final class Operation extends AbstractSpecification
 {
-    public function __construct(Responses $responses)
-    {
+    public function __construct(
+        Responses $responses,
+        ?string $summary = null,
+        ?string $description = null,
+        ?ExternalDocumentation $externalDocs = null,
+        ?string $operationId = null,
+        ?Parameters $parameters = null,
+        ?Tags $tags = null,
+        ?SecurityRequirements $security = null
+    ) {
         $this->properties['responses'] = $responses;
+
+        if (null !== $summary) {
+            $this->properties['summary'] = $summary;
+        }
+
+        if (null !== $description) {
+            $this->properties['description'] = $description;
+        }
+
+        if (null !== $externalDocs) {
+            $this->properties['externalDocs'] = $externalDocs;
+        }
+
+        if (null !== $operationId) {
+            $this->properties['operationId'] = $operationId;
+        }
+
+        if (null !== $parameters) {
+            $this->properties['parameters'] = $parameters;
+        }
+
+        if (null !== $tags) {
+            $this->properties['tags'] = $tags;
+        }
+
+        if (null !== $security) {
+            $this->properties['security'] = $security;
+        }
+    }
+
+    public static function create(array $responses, array $options = []): self
+    {
+        if (isset($options['parameters']) && is_array($options['parameters'])) {
+            $options['parameters'] = new Parameters($options['parameters']);
+        }
+
+        if (isset($options['tags']) && is_array($options['tags'])) {
+            $options['tags'] = new Tags($options['tags']);
+        }
+
+        if (isset($options['security']) && is_array($options['security'])) {
+            $options['security'] = new SecurityRequirements($options['security']);
+        }
+
+        $parameters = array_merge($options, [
+            'responses' => new Responses($responses),
+        ]);
+
+        return new self(...$parameters);
     }
 
     public function getRequiredProperties(): array

@@ -26,6 +26,68 @@ namespace Thingston\OpenApi\Specification;
  */
 final class Components extends AbstractSpecification
 {
+    public function __construct(
+        ?Schemas $schemas = null,
+        ?Responses $responses = null,
+        ?Parameters $parameters = null,
+        ?Examples $examples = null,
+        ?RequestBodies $requestBodies = null,
+        ?Headers $headers = null,
+    ) {
+        if (null !== $schemas) {
+            $this->properties['schemas'] = $schemas;
+        }
+
+        if (null !== $responses) {
+            $this->properties['responses'] = $responses;
+        }
+
+        if (null !== $parameters) {
+            $this->properties['parameters'] = $parameters;
+        }
+
+        if (null !== $examples) {
+            $this->properties['examples'] = $examples;
+        }
+
+        if (null !== $requestBodies) {
+            $this->properties['requestBodies'] = $requestBodies;
+        }
+
+        if (null !== $headers) {
+            $this->properties['headers'] = $headers;
+        }
+    }
+
+    public static function create(array $options = []): self
+    {
+        if (isset($options['schemas']) && is_array($options['schemas'])) {
+            $options['schemas'] = new Schemas($options['schemas']);
+        }
+
+        if (isset($options['responses']) && is_array($options['responses'])) {
+            $options['responses'] = new Responses($options['responses']);
+        }
+
+        if (isset($options['parameters']) && is_array($options['parameters'])) {
+            $options['parameters'] = new Parameters($options['parameters']);
+        }
+
+        if (isset($options['examples']) && is_array($options['examples'])) {
+            $options['examples'] = new Examples($options['examples']);
+        }
+
+        if (isset($options['requestBodies']) && is_array($options['requestBodies'])) {
+            $options['requestBodies'] = new RequestBodies($options['requestBodies']);
+        }
+
+        if (isset($options['headers']) && is_array($options['headers'])) {
+            $options['headers'] = new Headers($options['headers']);
+        }
+
+        return new self(...$options);
+    }
+
     public function getOptionalProperties(): array
     {
         return [

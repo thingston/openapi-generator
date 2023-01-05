@@ -30,11 +30,49 @@ final class OpenApi extends AbstractSpecification
 {
     public const OA_VERSION = '3.0.3';
 
-    public function __construct(Info $info, Paths $paths, string $openapi = self::OA_VERSION)
-    {
+    public function __construct(
+        Info $info,
+        Paths $paths,
+        string $openapi = self::OA_VERSION,
+        ?Servers $servers = null,
+        ?Components $components = null,
+        ?ExternalDocumentation $externalDocs = null,
+        ?Tags $tags = null,
+        ?SecurityRequirements $security = null
+    ) {
         $this->properties['info'] = $info;
         $this->properties['paths'] = $paths;
         $this->properties['openapi'] = $openapi;
+
+        if (null !== $servers) {
+            $this->properties['servers'] = $servers;
+        }
+
+        if (null !== $components) {
+            $this->properties['components'] = $components;
+        }
+
+        if (null !== $externalDocs) {
+            $this->properties['externalDocs'] = $externalDocs;
+        }
+
+        if (null !== $tags) {
+            $this->properties['tags'] = $tags;
+        }
+
+        if (null !== $security) {
+            $this->properties['security'] = $security;
+        }
+    }
+
+    public static function create(string $title, string $version, array $paths, array $options = []): self
+    {
+        $parameters = array_merge($options, [
+            'info' => Info::create($title, $version, $options['info'] ?? []),
+            'paths' => new Paths($paths),
+        ]);
+
+        return new self(...$parameters);
     }
 
     public function getRequiredProperties(): array

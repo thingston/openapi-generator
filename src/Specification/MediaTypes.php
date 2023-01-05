@@ -20,6 +20,6 @@ final class MediaTypes extends AbstractSpecification
 
     public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
     {
-        parent::assertArrayableType($value, MediaTypes::class);
+        parent::assertArrayableType($value, MediaType::class);
     }
 }

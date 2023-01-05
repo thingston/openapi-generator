@@ -19,10 +19,41 @@ namespace Thingston\OpenApi\Specification;
  */
 final class Response extends AbstractSpecification
 {
-    public function __construct(string $description, string $key = '200')
-    {
-        $this->key = $key;
+    public function __construct(
+        string $description,
+        string $status = '200',
+        ?MediaTypes $content = null,
+        ?Headers $headers = null
+    ) {
+        $this->key = $status;
         $this->properties['description'] = $description;
+
+        if (null !== $content) {
+            $this->properties['content'] = $content;
+        }
+
+        if (null !== $headers) {
+            $this->properties['headers'] = $headers;
+        }
+    }
+
+    public static function create(
+        string $description,
+        array $content,
+        string $status = '200',
+        array $options = []
+    ): self {
+        if (isset($options['headers']) && is_array($options['headers'])) {
+            $options['headers'] = new Headers($options['headers']);
+        }
+
+        $parameters = array_merge($options, [
+            'description' => $description,
+            'status' => $status,
+            'content' => new MediaTypes($content),
+        ]);
+
+        return new self(...$parameters);
     }
 
     public function getRequiredProperties(): array

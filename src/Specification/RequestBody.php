@@ -18,9 +18,29 @@ namespace Thingston\OpenApi\Specification;
  */
 final class RequestBody extends AbstractSpecification
 {
-    public function __construct(MediaTypes $content)
-    {
+    public function __construct(
+        MediaTypes $content,
+        ?string $description = null,
+        ?bool $required = null
+    ) {
         $this->properties['content'] = $content;
+
+        if (null !== $description) {
+            $this->properties['description'] = $description;
+        }
+
+        if (null !== $required) {
+            $this->properties['required'] = $required;
+        }
+    }
+
+    public static function create(array $content, array $options = []): self
+    {
+        $parameters = array_merge($options, [
+            'content' => new MediaTypes($content),
+        ]);
+
+        return new self(...$parameters);
     }
 
     public function getRequiredProperties(): array

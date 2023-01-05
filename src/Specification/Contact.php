@@ -18,9 +18,39 @@ namespace Thingston\OpenApi\Specification;
  */
 final class Contact extends AbstractSpecification
 {
-    public function __construct(string $name)
-    {
+    public function __construct(
+        string $name,
+        $url = null,
+        $email = null
+    ) {
         $this->properties['name'] = $name;
+
+        if (is_string($email)) {
+            $email = new Email($email);
+        }
+
+        if (null !== $email) {
+            $this->properties['email'] = $email;
+        }
+
+        if (is_string($url)) {
+            $url = new Url($url);
+        }
+
+        if (null !== $url) {
+            $this->properties['url'] = $url;
+        }
+    }
+
+    public static function create(string $name, ?string $email = null, ?string $url = null): self
+    {
+        $parameters = [
+            'name' => $name,
+            'email' => $email,
+            'url' => $url,
+        ];
+
+        return new self(...$parameters);
     }
 
     public function getRequiredProperties(): array
