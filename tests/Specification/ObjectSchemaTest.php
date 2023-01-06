@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
+use stdClass;
 use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\ObjectSchema;
 use Thingston\OpenApi\Specification\Schemas;
+use Thingston\OpenApi\Specification\StringSchema;
 
 final class ObjectSchemaTest extends AbstractSpecificationTest
 {
@@ -26,7 +28,7 @@ final class ObjectSchemaTest extends AbstractSpecificationTest
             ->setTitle('Schema title')
             ->setDescription('Some description')
             ->setNullable(false)
-            ->setExample(new \stdClass());
+            ->setExample(new stdClass());
     }
 
     public function testFactory(): void
@@ -36,7 +38,7 @@ final class ObjectSchemaTest extends AbstractSpecificationTest
         $description = 'Some description';
         $nullable = false;
         $example = 123.45;
-        $properties = \Thingston\OpenApi\Specification\StringSchema::create('bar');
+        $properties = [StringSchema::create('bar')];
         $required = ['bar'];
 
         $schema = ObjectSchema::create($key, $properties, $required, $title, [
@@ -51,7 +53,7 @@ final class ObjectSchemaTest extends AbstractSpecificationTest
         $this->assertSame($description, $schema->getDescription());
         $this->assertSame($nullable, $schema->getNullable());
         $this->assertSame($example, $schema->getExample());
-        $this->assertSame($properties, $schema->getProperties());
+        $this->assertInstanceOf(Schemas::class, $schema->getProperties());
         $this->assertSame($required, $schema->getRequired());
     }
 }

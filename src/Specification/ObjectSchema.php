@@ -27,7 +27,7 @@ final class ObjectSchema extends Schema
     public function __construct(
         string $key,
         ?array $required = null,
-        $properties = null,
+        ?Schemas $properties = null,
         ?bool $additionalProperties = null,
         ?int $minProperties = null,
         ?int $maxProperties = null,
@@ -68,6 +68,10 @@ final class ObjectSchema extends Schema
         ?string $title = null,
         array $options = []
     ): self {
+        if (is_array($properties)) {
+            $properties = new Schemas($properties);
+        }
+
         $parameters = array_merge($options, [
             'key' => $key,
             'properties' => $properties,
@@ -82,7 +86,7 @@ final class ObjectSchema extends Schema
     {
         return array_merge(parent::getOptionalProperties(), [
             'required' => 'array',
-            'properties' => implode('|', [Schemas::class, Reference::class]),
+            'properties' => Schemas::class,
             'additionalProperties' => 'boolean',
             'minProperties' => 'integer',
             'maxProperties' => 'integer',
