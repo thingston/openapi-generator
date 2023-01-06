@@ -18,9 +18,34 @@ namespace Thingston\OpenApi\Specification;
  */
 final class ServerVariable extends AbstractSpecification
 {
-    public function __construct(string $default)
-    {
+    public function __construct(
+        string $default,
+        ?string $description = null,
+        ?Enum $enum = null,
+    ) {
         $this->properties['default'] = $default;
+
+        if (null !== $description) {
+            $this->properties['description'] = $description;
+        }
+
+        if (null !== $enum) {
+            $this->properties['enum'] = $enum;
+        }
+    }
+
+    public static function create(string $default, ?array $enum = null, array $options = []): self
+    {
+        if (is_array($enum)) {
+            $enum = new Enum($enum);
+        }
+
+        $parameters = array_merge($options, [
+            'default' => $default,
+            'enum' => $enum,
+        ]);
+
+        return new self(...$parameters);
     }
 
     public function getRequiredProperties(): array

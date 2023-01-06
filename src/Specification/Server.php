@@ -18,9 +18,37 @@ namespace Thingston\OpenApi\Specification;
  */
 final class Server extends AbstractSpecification
 {
-    public function __construct(Url $url)
-    {
+    public function __construct(
+        Url $url,
+        ?string $description = null,
+        ?ServerVariables $variables = null,
+    ) {
         $this->properties['url'] = $url;
+
+        if (null !== $description) {
+            $this->properties['description'] = $description;
+        }
+
+        if (null !== $variables) {
+            $this->properties['variables'] = $variables;
+        }
+    }
+
+    public static function create($url, array $options = []): self
+    {
+        if (is_string($url)) {
+            $url = new Url($url);
+        }
+
+        if (isset($options['variables']) && is_array($options['variables'])) {
+            $options['variables'] = new ServerVariables($options['variables']);
+        }
+
+        $parameters = array_merge($options, [
+            'url' => $url,
+        ]);
+
+        return new self(...$parameters);
     }
 
     public function getRequiredProperties(): array

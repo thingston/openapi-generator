@@ -19,9 +19,29 @@ namespace Thingston\OpenApi\Specification;
  */
 final class Tag extends AbstractSpecification
 {
-    public function __construct(string $name)
-    {
+    public function __construct(
+        string $name,
+        ?string $description = null,
+        ?ExternalDocumentation $externalDocs = null
+    ) {
         $this->properties['name'] = $name;
+
+        if (null !== $description) {
+            $this->properties['description'] = $description;
+        }
+
+        if (null !== $externalDocs) {
+            $this->properties['externalDocs'] = $externalDocs;
+        }
+    }
+
+    public static function create(string $name, array $options = []): self
+    {
+        $parameters = array_merge($options, [
+            'name' => $name,
+        ]);
+
+        return new self(...$parameters);
     }
 
     public function getRequiredProperties(): array
