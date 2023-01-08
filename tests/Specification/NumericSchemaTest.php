@@ -43,7 +43,7 @@ final class NumericSchemaTest extends AbstractSpecificationTest
             'example' => $example,
         ]);
 
-        $this->assertSame($key, $schema->key);
+        $this->assertSame($key, $schema->getKey());
         $this->assertSame($title, $schema->getTitle());
         $this->assertSame($description, $schema->getDescription());
         $this->assertSame($nullable, $schema->getNullable());

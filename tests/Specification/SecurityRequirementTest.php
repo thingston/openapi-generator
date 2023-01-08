@@ -13,7 +13,7 @@ final class SecurityRequirementTest extends AbstractTestCase
     {
         $securityRequirement = new SecurityRequirement('key');
 
-        $this->assertSame('key', $securityRequirement->key);
+        $this->assertSame('key', $securityRequirement->getKey());
         $this->assertEmpty($securityRequirement->getScopes());
         $this->assertArrayHasKey('key', $securityRequirement->toArray());
         $this->assertSame([], $securityRequirement->toArray()['key']);
@@ -24,7 +24,7 @@ final class SecurityRequirementTest extends AbstractTestCase
         $scopes = ['read', 'write'];
         $securityRequirement = new SecurityRequirement('key', $scopes);
 
-        $this->assertSame('key', $securityRequirement->key);
+        $this->assertSame('key', $securityRequirement->getKey());
         $this->assertNotEmpty($securityRequirement->getScopes());
         $this->assertArrayHasKey('key', $securityRequirement->toArray());
         $this->assertSame($scopes, $securityRequirement->toArray()['key']);

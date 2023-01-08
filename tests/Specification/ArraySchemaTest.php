@@ -45,7 +45,7 @@ final class ArraySchemaTest extends AbstractSpecificationTest
             'example' => $example,
         ]);
 
-        $this->assertSame($key, $schema->key);
+        $this->assertSame($key, $schema->getKey());
         $this->assertSame($title, $schema->getTitle());
         $this->assertSame($items, $schema->getItems());
         $this->assertSame($description, $schema->getDescription());

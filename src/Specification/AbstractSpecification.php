@@ -22,12 +22,17 @@ abstract class AbstractSpecification implements
     Countable,
     IteratorAggregate
 {
-    public ?string $key = null;
+    protected ?string $key = null;
     protected array $properties = [];
 
     public function getRequiredProperties(): array
     {
         return [];
+    }
+
+    public function getKey(): ?string
+    {
+        return $this->key;
     }
 
     public function getOptionalProperties(): array
