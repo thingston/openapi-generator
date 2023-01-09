@@ -7,17 +7,23 @@ namespace Thingston\OpenApi\Specification;
 /**
  * String schema object.
  *
+ * @link https://swagger.io/specification/#schema-object
  * @link https://cswr.github.io/JsonSchema/spec/basic_types/#string-schemas
- *
- * @method int|null getMinLength()
- * @method StringSchema setMinLength(?int $minLength)
- * @method int|null getMaxLength()
- * @method StringSchema setMaxLength(?int $maxLength)
- * @method string|null getPattern()
- * @method StringSchema setPattern(?string $pattern)
  */
 final class StringSchema extends Schema
 {
+    /**
+     * StringSchema constructor.
+     *
+     * @param string $key
+     * @param int|null $minLength
+     * @param int|null $maxLength
+     * @param string|null $pattern
+     * @param string|null $title
+     * @param string|null $description
+     * @param bool|null $nullable
+     * @param mixed $example
+     */
     public function __construct(
         string $key,
         ?int $minLength = null,
@@ -26,7 +32,7 @@ final class StringSchema extends Schema
         ?string $title = null,
         ?string $description = null,
         ?bool $nullable = null,
-        $example = null
+        mixed $example = null
     ) {
         parent::__construct($key, self::TYPE_STRING, $title, $description, $nullable, $example);
 
@@ -43,6 +49,14 @@ final class StringSchema extends Schema
         }
     }
 
+    /**
+     * Create StringSchema instance.
+     *
+     * @param string $key
+     * @param string|null $title
+     * @param array $options
+     * @return self
+     */
     public static function create(string $key, ?string $title = null, array $options = []): self
     {
         $parameters = array_merge($options, [
@@ -53,12 +67,72 @@ final class StringSchema extends Schema
         return new self(...$parameters);
     }
 
-    public function getOptionalProperties(): array
+    /**
+     * Get min length.
+     *
+     * @return int|null
+     */
+    public function getMinLength(): ?int
     {
-        return array_merge(parent::getOptionalProperties(), [
-            'minLength' => 'integer',
-            'maxLength' => 'integer',
-            'pattern' => 'string',
-        ]);
+        return $this->properties['minLength'] ?? null;
+    }
+
+    /**
+     * Set min length.
+     *
+     * @param int|null $minLength
+     * @return self
+     */
+    public function setMinLength(?int $minLength): self
+    {
+        $this->properties['minLength'] = $minLength;
+
+        return $this;
+    }
+
+    /**
+     * Get max length.
+     *
+     * @return int|null
+     */
+    public function getMaxLength(): ?int
+    {
+        return $this->properties['maxLength'] ?? null;
+    }
+
+    /**
+     * Set max length.
+     *
+     * @param int|null $maxLength
+     * @return self
+     */
+    public function setMaxLength(?int $maxLength): self
+    {
+        $this->properties['maxLength'] = $maxLength;
+
+        return $this;
+    }
+
+    /**
+     * Get pattern.
+     *
+     * @return string|null
+     */
+    public function getPattern(): ?string
+    {
+        return $this->properties['pattern'] ?? null;
+    }
+
+    /**
+     * Set pattern.
+     *
+     * @param string|null $pattern
+     * @return self
+     */
+    public function setPattern(?string $pattern): self
+    {
+        $this->properties['pattern'] = $pattern;
+
+        return $this;
     }
 }

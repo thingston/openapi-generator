@@ -4,23 +4,18 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\BooleanSchema;
+use Thingston\OpenApi\Specification\Schema;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class BooleanSchemaTest extends AbstractSpecificationTest
+final class BooleanSchemaTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new BooleanSchema('name');
-    }
+        $schema = new BooleanSchema('foo');
 
-    public function createFullSpecification(): AbstractSpecification
-    {
-        return $schema = (new BooleanSchema('name'))
-            ->setTitle('Schema title')
-            ->setDescription('Some description')
-            ->setNullable(false)
-            ->setExample(true);
+        $this->assertSame('foo', $schema->getKey());
+        $this->assertSame(Schema::TYPE_BOOLEAN, $schema->getType());
     }
 
     public function testFactory(): void

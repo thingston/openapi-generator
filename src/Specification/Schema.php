@@ -14,19 +14,19 @@ use Thingston\OpenApi\Exception\InvalidArgumentException;
  * @link https://swagger.io/specification/#schema-object
  * @link https://json-schema.org/
  *
- * @method string getType()
- * @method Schema setType(string $type)
- * @method string|null getTitle()
- * @method Schema setTitle(?string $title)
- * @method string|null getDescription()
- * @method Schema setDescription(?string $description)
- * @method boll|null getNullable()
- * @method Schema setNullable(?bool $nullable)
- * @method mixed getExample()
- * @method Schema setExample(mixed $example)
+ * @see StringSchema
+ * @see IntegerSchema
+ * @see NumericSchema
+ * @see BooleanSchema
+ * @see NullSchema
+ * @see ArraySchema
+ * @see ObjectSchema
  */
 abstract class Schema extends AbstractSpecification
 {
+    /**
+     * Schema types
+     */
     public const TYPE_STRING = 'string';
     public const TYPE_NUMERIC = 'number';
     public const TYPE_INTEGER = 'integer';
@@ -35,15 +35,33 @@ abstract class Schema extends AbstractSpecification
     public const TYPE_ARRAY = 'array';
     public const TYPE_OBJECT = 'object';
 
+    /**
+     * Schema constructor.
+     *
+     * @param string $key
+     * @param string $type
+     * @param string|null $title
+     * @param string|null $description
+     * @param bool|null $nullable
+     * @param mixed $example
+     */
     public function __construct(
         string $key,
         string $type,
         ?string $title = null,
         ?string $description = null,
         ?bool $nullable = null,
-        $example = null
+        mixed $example = null
     ) {
-        $this->assertSchemaType($type);
+        if (false === in_array($type, self::getTypes())) {
+            $message = sprintf(
+                'Type "%s" is invalid; it must be one of "%s".',
+                $type,
+                implode('", "', self::getTypes())
+            );
+
+            throw new InvalidArgumentException($message);
+        }
 
         $this->key = $key;
         $this->properties['type'] = $type;
@@ -65,9 +83,14 @@ abstract class Schema extends AbstractSpecification
         }
     }
 
-    public function assertSchemaType(string $type): void
+    /**
+     * Get types.
+     *
+     * @return string[]
+     */
+    public static function getTypes(): array
     {
-        $types = [
+        return [
             self::TYPE_STRING,
             self::TYPE_NUMERIC,
             self::TYPE_INTEGER,
@@ -76,27 +99,107 @@ abstract class Schema extends AbstractSpecification
             self::TYPE_ARRAY,
             self::TYPE_OBJECT,
         ];
-
-        if (false === in_array($type, $types)) {
-            $message = sprintf('Type "%s" is invalid; it must be one of "%s".', $type, implode('", "', $types));
-            throw new InvalidArgumentException($message);
-        }
     }
 
-    public function getRequiredProperties(): array
+    /**
+     * Get type.
+     *
+     * @return string
+     */
+    public function getType(): string
     {
-        return [
-            'type' => 'string',
-        ];
+        return $this->properties['type'];
     }
 
-    public function getOptionalProperties(): array
+    /**
+     * Get title.
+     *
+     * @return string|null
+     */
+    public function getTitle(): ?string
     {
-        return [
-            'title' => 'string',
-            'description' => 'string',
-            'nullable' => 'boolean',
-            'example' => 'mixed',
-        ];
+        return $this->properties['title'] ?? null;
+    }
+
+    /**
+     * Set title.
+     *
+     * @param string|null $title
+     * @return self
+     */
+    public function setTitle(?string $title): self
+    {
+        $this->properties['title'] = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->properties['description'] ?? null;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string|null $description
+     * @return self
+     */
+    public function setDescription(?string $description): self
+    {
+        $this->properties['description'] = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get nullable.
+     *
+     * @return bool|null
+     */
+    public function getNullable(): ?bool
+    {
+        return $this->properties['nullable'] ?? null;
+    }
+
+    /**
+     * Set nullable.
+     *
+     * @param bool|null $nullable
+     * @return self
+     */
+    public function setNullable(?bool $nullable): self
+    {
+        $this->properties['nullable'] = $nullable;
+
+        return $this;
+    }
+
+    /**
+     * Get example.
+     *
+     * @return mixed
+     */
+    public function getExample(): mixed
+    {
+        return $this->properties['example'] ?? null;
+    }
+
+    /**
+     * Set example.
+     *
+     * @param mixed $example
+     * @return self
+     */
+    public function setExample(mixed $example): self
+    {
+        $this->properties['example'] = $example;
+
+        return $this;
     }
 }

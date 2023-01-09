@@ -4,26 +4,28 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
-use Thingston\OpenApi\Exception\InvalidArgumentException;
-
 /**
  * Object schema object.
  *
+ * @link https://swagger.io/specification/#schema-object
  * @link https://cswr.github.io/JsonSchema/spec/objects/#object-schemas
- *
- * @method string[]|null getRequired()
- * @method ObjectSchema setRequired(?array $required)
- * @method Schemas|null getProperties()
- * @method ObjectSchema setProperties(?Schemas $properties)
- * @method bool|null getAdditionalProperties()
- * @method ObjectSchema setAdditionalProperties(?bool $additionalProperties)
- * @method int|null getMinProperties()
- * @method ObjectSchema setMinProperties(?int $minProperties)
- * @method int|null getMaxProperties()
- * @method ObjectSchema setMaxProperties(?int $maxProperties)
  */
 final class ObjectSchema extends Schema
 {
+    /**
+     * ObjectSchema constructor.
+     *
+     * @param string $key
+     * @param array|null $required
+     * @param Schemas|null $properties
+     * @param bool|null $additionalProperties
+     * @param int|null $minProperties
+     * @param int|null $maxProperties
+     * @param string|null $title
+     * @param string|null $description
+     * @param bool|null $nullable
+     * @param mixed $example
+     */
     public function __construct(
         string $key,
         ?array $required = null,
@@ -34,10 +36,8 @@ final class ObjectSchema extends Schema
         ?string $title = null,
         ?string $description = null,
         ?bool $nullable = null,
-        $example = null
+        mixed $example = null
     ) {
-        $this->assertPropertyNullable('properties', $properties);
-
         parent::__construct($key, self::TYPE_OBJECT, $title, $description, $nullable, $example);
 
         if (null !== $required) {
@@ -61,9 +61,134 @@ final class ObjectSchema extends Schema
         }
     }
 
+    /**
+     * Get required.
+     *
+     * @return array|null
+     */
+    public function getRequired(): ?array
+    {
+        return $this->properties['required'] ?? null;
+    }
+
+    /**
+     * Set required.
+     *
+     * @param array|null $required
+     * @return self
+     */
+    public function setRequired(?array $required): self
+    {
+        $this->properties['required'] = $required;
+
+        return $this;
+    }
+
+    /**
+     * Get properties.
+     *
+     * @return Schemas|null
+     */
+    public function getProperties(): ?Schemas
+    {
+        return $this->properties['properties'] ?? null;
+    }
+
+    /**
+     * Set properties.
+     *
+     * @param Schemas|null $properties
+     * @return self
+     */
+    public function setProperties(?Schemas $properties): self
+    {
+        $this->properties['properties'] = $properties;
+
+        return $this;
+    }
+
+    /**
+     * Get additional properties.
+     *
+     * @return bool|null
+     */
+    public function getAdditionalProperties(): ?bool
+    {
+        return $this->properties['additionalProperties'] ?? null;
+    }
+
+    /**
+     * Set additional properties.
+     *
+     * @param bool|null $additionalProperties
+     * @return self
+     */
+    public function setAdditionalProperties(?bool $additionalProperties): self
+    {
+        $this->properties['additionalProperties'] = $additionalProperties;
+
+        return $this;
+    }
+
+    /**
+     * Get min properties.
+     *
+     * @return int|null
+     */
+    public function getMinProperties(): ?int
+    {
+        return $this->properties['minProperties'] ?? null;
+    }
+
+    /**
+     * Set min properties.
+     *
+     * @param int|null $minProperties
+     * @return self
+     */
+    public function setMinProperties(?int $minProperties): self
+    {
+        $this->properties['minProperties'] = $minProperties;
+
+        return $this;
+    }
+
+    /**
+     * Get max properties.
+     *
+     * @return int|null
+     */
+    public function getMaxProperties(): ?int
+    {
+        return $this->properties['maxProperties'] ?? null;
+    }
+
+    /**
+     * Set max properties.
+     *
+     * @param int|null $maxProperties
+     * @return self
+     */
+    public function setMaxProperties(?int $maxProperties): self
+    {
+        $this->properties['maxProperties'] = $maxProperties;
+
+        return $this;
+    }
+
+    /**
+     * Create ObjectSchema instance.
+     *
+     * @param string $key
+     * @param Schemas|array<Schema>|array<Reference>|null $properties
+     * @param array|null $required
+     * @param string|null $title
+     * @param array $options
+     * @return self
+     */
     public static function create(
         string $key,
-        $properties = null,
+        mixed $properties = null,
         ?array $required = null,
         ?string $title = null,
         array $options = []
@@ -80,30 +205,5 @@ final class ObjectSchema extends Schema
         ]);
 
         return new self(...$parameters);
-    }
-
-    public function getOptionalProperties(): array
-    {
-        return array_merge(parent::getOptionalProperties(), [
-            'required' => 'array',
-            'properties' => Schemas::class,
-            'additionalProperties' => 'boolean',
-            'minProperties' => 'integer',
-            'maxProperties' => 'integer',
-        ]);
-    }
-
-    public function assertPropertyType(string $name, $value): void
-    {
-        parent::assertPropertyType($name, $value);
-
-        if ('required' === $name) {
-            foreach ($value as $required) {
-                if (false === is_string($required)) {
-                    $message = 'Elements of "required" must be of the type "string".';
-                    throw new InvalidArgumentException($message);
-                }
-            }
-        }
     }
 }

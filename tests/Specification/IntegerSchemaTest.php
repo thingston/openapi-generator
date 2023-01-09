@@ -4,28 +4,51 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
+use Thingston\OpenApi\Specification\Schema;
 use Thingston\OpenApi\Specification\IntegerSchema;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class IntegerSchemaTest extends AbstractSpecificationTest
+final class IntegerSchemaTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new IntegerSchema('name');
+        $schema = new IntegerSchema('foo');
+
+        $this->assertSame('foo', $schema->getKey());
+        $this->assertSame(Schema::TYPE_INTEGER, $schema->getType());
+
+        $this->assertNull($schema->getMinimum());
+        $schema->setMinimum(3);
+        $this->assertSame(3, $schema->getMinimum());
+
+        $this->assertNull($schema->getMaximum());
+        $schema->setMaximum(7);
+        $this->assertSame(7, $schema->getMaximum());
+
+        $this->assertNull($schema->getExclusiveMinimum());
+        $schema->setExclusiveMinimum(true);
+        $this->assertTrue($schema->getExclusiveMinimum());
+
+        $this->assertNull($schema->getExclusiveMaximum());
+        $schema->setExclusiveMaximum(true);
+        $this->assertTrue($schema->getExclusiveMaximum());
+
+        $this->assertNull($schema->getMultipleOf());
+        $schema->setMultipleOf(2);
+        $this->assertSame(2, $schema->getMultipleOf());
     }
 
-    public function createFullSpecification(): AbstractSpecification
+    public function testFullSpecification(): void
     {
-        return (new IntegerSchema('name'))
-            ->setMinimum(10)
-            ->setMaximum(100)
-            ->setExclusiveMinimum(false)
-            ->setExclusiveMaximum(false)
-            ->setMultipleOf(5.0)
-            ->setTitle('Schema title')
-            ->setDescription('Some description')
-            ->setNullable(false)
-            ->setExample(123);
+        $schema = new IntegerSchema('foo', 3, 7, true, true, 2);
+
+        $this->assertSame('foo', $schema->getKey());
+        $this->assertSame(Schema::TYPE_INTEGER, $schema->getType());
+        $this->assertSame(3, $schema->getMinimum());
+        $this->assertSame(7, $schema->getMaximum());
+        $this->assertTrue($schema->getExclusiveMinimum());
+        $this->assertTrue($schema->getExclusiveMaximum());
+        $this->assertSame(2, $schema->getMultipleOf());
     }
 
     public function testFactory(): void

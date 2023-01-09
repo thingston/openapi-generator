@@ -4,23 +4,17 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\NullSchema;
+use Thingston\OpenApi\Specification\Schema;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class NullSchemaTest extends AbstractSpecificationTest
+final class NullSchemaTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new NullSchema('name');
-    }
+        $schema = new NullSchema('foo');
 
-    public function createFullSpecification(): AbstractSpecification
-    {
-        return $schema = (new NullSchema('name'))
-            ->setTitle('Schema title')
-            ->setDescription('Some description')
-            ->setNullable(false)
-            ->setExample(null);
+        $this->assertSame(Schema::TYPE_NULL, $schema->getType());
     }
 
     public function testFactory(): void

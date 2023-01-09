@@ -4,28 +4,51 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\NumericSchema;
+use Thingston\OpenApi\Specification\Schema;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class NumericSchemaTest extends AbstractSpecificationTest
+final class NumericSchemaTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new NumericSchema('name');
+        $schema = new NumericSchema('foo');
+
+        $this->assertSame('foo', $schema->getKey());
+        $this->assertSame(Schema::TYPE_NUMERIC, $schema->getType());
+
+        $this->assertNull($schema->getMinimum());
+        $schema->setMinimum(3.0);
+        $this->assertSame(3.0, $schema->getMinimum());
+
+        $this->assertNull($schema->getMaximum());
+        $schema->setMaximum(7.0);
+        $this->assertSame(7.0, $schema->getMaximum());
+
+        $this->assertNull($schema->getExclusiveMinimum());
+        $schema->setExclusiveMinimum(true);
+        $this->assertTrue($schema->getExclusiveMinimum());
+
+        $this->assertNull($schema->getExclusiveMaximum());
+        $schema->setExclusiveMaximum(true);
+        $this->assertTrue($schema->getExclusiveMaximum());
+
+        $this->assertNull($schema->getMultipleOf());
+        $schema->setMultipleOf(2);
+        $this->assertSame(2, $schema->getMultipleOf());
     }
 
-    public function createFullSpecification(): AbstractSpecification
+    public function testFullSpecification(): void
     {
-        return $schema = (new NumericSchema('name'))
-            ->setMinimum(10.0)
-            ->setMaximum(100.0)
-            ->setExclusiveMinimum(false)
-            ->setExclusiveMaximum(false)
-            ->setMultipleOf(5.0)
-            ->setTitle('Schema title')
-            ->setDescription('Some description')
-            ->setNullable(false)
-            ->setExample(12.5);
+        $schema = new NumericSchema('foo', 3.0, 7.0, true, true, 2);
+
+        $this->assertSame('foo', $schema->getKey());
+        $this->assertSame(Schema::TYPE_NUMERIC, $schema->getType());
+        $this->assertSame(3.0, $schema->getMinimum());
+        $this->assertSame(7.0, $schema->getMaximum());
+        $this->assertTrue($schema->getExclusiveMinimum());
+        $this->assertTrue($schema->getExclusiveMaximum());
+        $this->assertSame(2, $schema->getMultipleOf());
     }
 
     public function testFactory(): void

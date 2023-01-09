@@ -6,29 +6,56 @@ namespace Thingston\OpenApi\Test\Specification;
 
 use stdClass;
 use Thingston\OpenApi\Specification\AbstractSpecification;
+use Thingston\OpenApi\Specification\Schema;
 use Thingston\OpenApi\Specification\ObjectSchema;
 use Thingston\OpenApi\Specification\Schemas;
 use Thingston\OpenApi\Specification\StringSchema;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class ObjectSchemaTest extends AbstractSpecificationTest
+final class ObjectSchemaTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new ObjectSchema('name');
+        $schema = new ObjectSchema('foo');
+
+        $this->assertSame('foo', $schema->getKey());
+        $this->assertSame(Schema::TYPE_OBJECT, $schema->getType());
+
+        $this->assertNull($schema->getRequired());
+        $schema->setRequired($required = ['bar']);
+        $this->assertSame($required, $schema->getRequired());
+
+        $this->assertNull($schema->getProperties());
+        $schema->setProperties($properties = new Schemas());
+        $this->assertSame($properties, $schema->getProperties());
+
+        $this->assertNull($schema->getAdditionalProperties());
+        $schema->setAdditionalProperties(true);
+        $this->assertTrue($schema->getAdditionalProperties());
+
+        $this->assertNull($schema->getMinProperties());
+        $schema->setMinProperties(1);
+        $this->assertSame(1, $schema->getMinProperties());
+
+        $this->assertNull($schema->getMaxProperties());
+        $schema->setMaxProperties(10);
+        $this->assertSame(10, $schema->getMaxProperties());
     }
 
-    public function createFullSpecification(): AbstractSpecification
+    public function testFullSpecification(): void
     {
-        return (new ObjectSchema('name'))
-            ->setRequired(['foo'])
-            ->setProperties(new Schemas())
-            ->setMinProperties(1)
-            ->setMaxProperties(3)
-            ->setAdditionalProperties(false)
-            ->setTitle('Schema title')
-            ->setDescription('Some description')
-            ->setNullable(false)
-            ->setExample(new stdClass());
+        $required = ['bar'];
+        $properties = new Schemas();
+
+        $schema = new ObjectSchema('foo', $required, $properties, true, 1, 10);
+
+        $this->assertSame('foo', $schema->getKey());
+        $this->assertSame(Schema::TYPE_OBJECT, $schema->getType());
+        $this->assertSame($required, $schema->getRequired());
+        $this->assertSame($properties, $schema->getProperties());
+        $this->assertTrue($schema->getAdditionalProperties());
+        $this->assertSame(1, $schema->getMinProperties());
+        $this->assertSame(10, $schema->getMaxProperties());
     }
 
     public function testFactory(): void

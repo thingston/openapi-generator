@@ -4,26 +4,30 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
+use Thingston\OpenApi\Specification\Schema;
 use Thingston\OpenApi\Specification\StringSchema;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class StringSchemaTest extends AbstractSpecificationTest
+final class StringSchemaTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new StringSchema('name');
-    }
+        $schema = new StringSchema('foo');
 
-    public function createFullSpecification(): AbstractSpecification
-    {
-        return (new StringSchema('name'))
-            ->setMinLength(2)
-            ->setMaxLength(20)
-            ->setPattern('/\w+/')
-            ->setTitle('Schema title')
-            ->setDescription('Some description')
-            ->setNullable(false)
-            ->setExample('foo');
+        $this->assertSame('foo', $schema->getKey());
+        $this->assertSame(Schema::TYPE_STRING, $schema->getType());
+
+        $this->assertNull($schema->getMinLength());
+        $schema->setMinLength(5);
+        $this->assertSame(5, $schema->getMinLength());
+
+        $this->assertNull($schema->getMaxLength());
+        $schema->setMaxLength(20);
+        $this->assertSame(20, $schema->getMaxLength());
+
+        $this->assertNull($schema->getPattern());
+        $schema->setPattern('/\w+/');
+        $this->assertSame('/\w+/', $schema->getPattern());
     }
 
     public function testFactory(): void
