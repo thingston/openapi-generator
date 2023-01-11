@@ -10,25 +10,36 @@ namespace Thingston\OpenApi\Specification;
  * Schemes under the Components Object.
  *
  * @link https://swagger.io/specification/#security-requirement-object
- *
- * @method string[] getScopes()
- * @method SecurityRequirement setScopes(array $scopes)
  */
 final class SecurityRequirement extends AbstractSpecification
 {
+    /**
+     * SecurityRequirement constructor.
+     *
+     * @param string $key
+     * @param array<string> $scopes
+     */
     public function __construct(string $key, array $scopes = [])
     {
         $this->key = $key;
         $this->properties['scopes'] = $scopes;
     }
 
-    public function getRequiredProperties(): array
+    /**
+     * Get scopes.
+     *
+     * @return array<string>
+     */
+    public function getScopes(): array
     {
-        return [
-            'scopes' => 'array',
-        ];
+        return $this->properties['scopes'];
     }
 
+    /**
+     * Output this specification as an array.
+     *
+     * @return array
+     */
     public function toArray(): array
     {
         return [

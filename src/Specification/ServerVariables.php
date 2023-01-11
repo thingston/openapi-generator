@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * An array of serverVariable objects.
- *
- * @method ServerVariables addServerVariable(ServerVariable $serverVariable)
+ * Collection of serverVariable objects.
  */
 final class ServerVariables extends AbstractSpecification
 {
+    /**
+     * ServerVariables construct.
+     *
+     * @param array<ServerVariable> $serverVariables
+     */
     public function __construct(array $serverVariables = [])
     {
         foreach ($serverVariables as $serverVariable) {
@@ -18,8 +21,16 @@ final class ServerVariables extends AbstractSpecification
         }
     }
 
-    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    /**
+     * Add server variable.
+     *
+     * @param ServerVariable $serverVariable
+     * @return self
+     */
+    public function addServerVariable(ServerVariable $serverVariable): self
     {
-        parent::assertArrayableType($value, ServerVariable::class);
+        $this->properties[] = $serverVariable;
+
+        return $this;
     }
 }

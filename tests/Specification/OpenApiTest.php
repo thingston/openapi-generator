@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\Components;
 use Thingston\OpenApi\Specification\Contact;
 use Thingston\OpenApi\Specification\ExternalDocumentation;
@@ -17,22 +16,63 @@ use Thingston\OpenApi\Specification\SecurityRequirements;
 use Thingston\OpenApi\Specification\Servers;
 use Thingston\OpenApi\Specification\Tags;
 use Thingston\OpenApi\Specification\Url;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class OpenApiTest extends AbstractSpecificationTest
+final class OpenApiTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new OpenApi(new Info('API title', '1.0'), new Paths());
+        $api = new OpenApi(
+            $info = new Info('API title', '1.0'),
+            $paths = new Paths()
+        );
+
+        $this->assertSame($info, $api->getInfo());
+        $this->assertSame($paths, $api->getPaths());
+        $this->assertSame(OpenApi::OA_VERSION, $api->getOpenapi());
+
+        $this->assertNull($api->getServers());
+        $api->setServers($servers = new Servers());
+        $this->assertSame($servers, $api->getServers());
+
+        $this->assertNull($api->getComponents());
+        $api->setComponents($components = new Components());
+        $this->assertSame($components, $api->getComponents());
+
+        $this->assertNull($api->getExternalDocs());
+        $api->setExternalDocs($externalDocs = ExternalDocumentation::create('http://example.org/docs'));
+        $this->assertSame($externalDocs, $api->getExternalDocs());
+
+        $this->assertNull($api->getTags());
+        $api->setTags($tags = new Tags());
+        $this->assertSame($tags, $api->getTags());
+
+        $this->assertNull($api->getSecurity());
+        $api->setSecurity($security = new SecurityRequirements());
+        $this->assertSame($security, $api->getSecurity());
     }
 
-    public function createFullSpecification(): AbstractSpecification
+    public function testFullSpecification(): void
     {
-        return (new OpenApi(new Info('API title', '1.0'), new Paths()))
-            ->setServers(new Servers())
-            ->setComponents(new Components())
-            ->setExternalDocs(new ExternalDocumentation(new Url('http://example.org/docs')))
-            ->setTags(new Tags())
-            ->setSecurity(new SecurityRequirements());
+        $api = new OpenApi(
+            $info = new Info('API title', '1.0'),
+            $paths = new Paths(),
+            OpenApi::OA_VERSION,
+            $servers = new Servers(),
+            $components = new Components(),
+            $externalDocs = ExternalDocumentation::create('http://example.org/docs'),
+            $tags = new Tags(),
+            $security = new SecurityRequirements()
+        );
+
+        $this->assertSame($info, $api->getInfo());
+        $this->assertSame($paths, $api->getPaths());
+        $this->assertSame(OpenApi::OA_VERSION, $api->getOpenapi());
+        $this->assertSame($servers, $api->getServers());
+        $this->assertSame($components, $api->getComponents());
+        $this->assertSame($externalDocs, $api->getExternalDocs());
+        $this->assertSame($tags, $api->getTags());
+        $this->assertSame($security, $api->getSecurity());
     }
 
     public function testFactory(): void
@@ -46,7 +86,7 @@ final class OpenApiTest extends AbstractSpecificationTest
         $options = [
             'info' => [
                 'contact' => Contact::create('Contact Name', 'contact@example.org'),
-                'license' => new License('License Name', 'http://example.org/license'),
+                'license' => new License('License Name', new Url('http://example.org/license')),
             ],
         ];
 

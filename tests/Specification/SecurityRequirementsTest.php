@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\SecurityRequirement;
 use Thingston\OpenApi\Specification\SecurityRequirements;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class SecurityRequirementsTest extends AbstractSpecificationTest
+final class SecurityRequirementsTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new SecurityRequirements();
-    }
-
-    public function createFullSpecification(): AbstractSpecification
-    {
-        return new SecurityRequirements([
+        $requirements = new SecurityRequirements([
             new SecurityRequirement('foo'),
-            new SecurityRequirement('bar'),
         ]);
+
+        $this->assertCount(1, $requirements);
+
+        $requirements->addSecurityRequirement(new SecurityRequirement('bar'));
+
+        $this->assertCount(2, $requirements);
     }
 }

@@ -9,16 +9,16 @@ namespace Thingston\OpenApi\Specification;
  * mandatory to have a Tag Object per tag defined in the Operation Object instances.
  *
  * @link https://swagger.io/specification/#tag-object
- *
- * @method string getName()
- * @method Tag setName(string $name)
- * @method string|null getDescription()
- * @method Tag setDescription(?string $description)
- * @method ExternalDocumentation|null getExternalDocs()
- * @method Tag setExternalDocs(?ExternalDocumentation $externalDocs)
  */
 final class Tag extends AbstractSpecification
 {
+    /**
+     * Tag constructor.
+     *
+     * @param string $name
+     * @param string|null $description
+     * @param ExternalDocumentation|null $externalDocs
+     */
     public function __construct(
         string $name,
         ?string $description = null,
@@ -35,6 +35,82 @@ final class Tag extends AbstractSpecification
         }
     }
 
+    /**
+     * Get name.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->properties['name'];
+    }
+
+    /**
+     * Set name.
+     *
+     * @param string $name
+     * @return self
+     */
+    public function setName(string $name): self
+    {
+        $this->properties['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->properties['description'] ?? null;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string|null $description
+     * @return self
+     */
+    public function setDescription(?string $description): self
+    {
+        $this->properties['description'] = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get external docs.
+     *
+     * @return ExternalDocumentation|null
+     */
+    public function getExternalDocs(): ?ExternalDocumentation
+    {
+        return $this->properties['externalDocs'] ?? null;
+    }
+
+    /**
+     * Set external docs.
+     *
+     * @param ExternalDocumentation|null $externalDocs
+     * @return self
+     */
+    public function setExternalDocs(?ExternalDocumentation $externalDocs): self
+    {
+        $this->properties['externalDocs'] = $externalDocs;
+
+        return $this;
+    }
+
+    /**
+     * Create Tag instance.
+     *
+     * @param string $name
+     * @param array $options
+     * @return self
+     */
     public static function create(string $name, array $options = []): self
     {
         $parameters = array_merge($options, [
@@ -42,20 +118,5 @@ final class Tag extends AbstractSpecification
         ]);
 
         return new self(...$parameters);
-    }
-
-    public function getRequiredProperties(): array
-    {
-        return [
-            'name' => 'string',
-        ];
-    }
-
-    public function getOptionalProperties(): array
-    {
-        return [
-            'description' => 'string',
-            'externalDocs' => ExternalDocumentation::class,
-        ];
     }
 }

@@ -12,28 +12,25 @@ namespace Thingston\OpenApi\Specification;
  */
 final class Reference extends AbstractSpecification
 {
+    /**
+     * Reference constructor.
+     *
+     * @param string $key
+     * @param string $ref
+     */
     public function __construct(string $key, string $ref)
     {
         $this->key = $key;
         $this->properties['$ref'] = $ref;
     }
 
-    public function getRequiredProperties(): array
-    {
-        return [
-            '$ref' => 'string',
-        ];
-    }
-
-    public function getReference(): string
+    /**
+     * Get ref.
+     *
+     * @return string
+     */
+    public function getRef(): string
     {
         return $this->properties['$ref'];
-    }
-
-    public function setReference(string $ref): self
-    {
-        $this->properties['$ref'] = $ref;
-
-        return $this;
     }
 }

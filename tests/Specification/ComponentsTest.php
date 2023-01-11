@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\Components;
 use Thingston\OpenApi\Specification\Examples;
 use Thingston\OpenApi\Specification\Headers;
@@ -15,23 +14,56 @@ use Thingston\OpenApi\Specification\RequestBodies;
 use Thingston\OpenApi\Specification\Responses;
 use Thingston\OpenApi\Specification\Schemas;
 use Thingston\OpenApi\Specification\StringSchema;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class ComponentsTest extends AbstractSpecificationTest
+final class ComponentsTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new Components();
+        $components = new Components();
+
+        $this->assertNull($components->getSchemas());
+        $components->setSchemas($schemas = new Schemas());
+        $this->assertSame($schemas, $components->getSchemas());
+
+        $this->assertNull($components->getResponses());
+        $components->setResponses($responses = new Responses());
+        $this->assertSame($responses, $components->getResponses());
+
+        $this->assertNull($components->getParameters());
+        $components->setParameters($parameters = new Parameters());
+        $this->assertSame($parameters, $components->getParameters());
+
+        $this->assertNull($components->getExamples());
+        $components->setExamples($examples = new Examples());
+        $this->assertSame($examples, $components->getExamples());
+
+        $this->assertNull($components->getRequestBodies());
+        $components->setRequestBodies($requestBodies = new RequestBodies());
+        $this->assertSame($requestBodies, $components->getRequestBodies());
+
+        $this->assertNull($components->getHeaders());
+        $components->setHeaders($headers = new Headers());
+        $this->assertSame($headers, $components->getHeaders());
     }
 
-    public function createFullSpecification(): AbstractSpecification
+    public function testFullSpecification(): void
     {
-        return (new Components())
-            ->setSchemas(new Schemas())
-            ->setResponses(new Responses())
-            ->setParameters(new Parameters())
-            ->setRequestBodies(new RequestBodies())
-            ->setExamples(new Examples())
-            ->setHeaders(new Headers());
+        $components = new Components(
+            $schemas = new Schemas(),
+            $responses = new Responses(),
+            $parameters = new Parameters(),
+            $examples = new Examples(),
+            $requestBodies = new RequestBodies(),
+            $headers = new Headers()
+        );
+
+        $this->assertSame($schemas, $components->getSchemas());
+        $this->assertSame($responses, $components->getResponses());
+        $this->assertSame($parameters, $components->getParameters());
+        $this->assertSame($examples, $components->getExamples());
+        $this->assertSame($requestBodies, $components->getRequestBodies());
+        $this->assertSame($headers, $components->getHeaders());
     }
 
     public function testFactory(): void

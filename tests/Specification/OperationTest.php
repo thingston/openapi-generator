@@ -4,31 +4,71 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\ExternalDocumentation;
 use Thingston\OpenApi\Specification\Operation;
 use Thingston\OpenApi\Specification\Parameters;
 use Thingston\OpenApi\Specification\Responses;
 use Thingston\OpenApi\Specification\SecurityRequirements;
 use Thingston\OpenApi\Specification\Tags;
-use Thingston\OpenApi\Specification\Url;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class OperationTest extends AbstractSpecificationTest
+final class OperationTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new Operation(new Responses());
+        $operation = new Operation($responses = new Responses());
+
+        $this->assertSame($responses, $operation->getResponses());
+
+        $this->assertNull($operation->getSummary());
+        $operation->setSummary('Some summary');
+        $this->assertSame('Some summary', $operation->getSummary());
+
+        $this->assertNull($operation->getDescription());
+        $operation->setDescription('Some description');
+        $this->assertSame('Some description', $operation->getDescription());
+
+        $this->assertNull($operation->getExternalDocs());
+        $operation->setExternalDocs($externalDocs = ExternalDocumentation::create('http://example.org/docs'));
+        $this->assertSame($externalDocs, $operation->getExternalDocs());
+
+        $this->assertNull($operation->getOperationId());
+        $operation->setOperationId('Some operationId');
+        $this->assertSame('Some operationId', $operation->getOperationId());
+
+        $this->assertNull($operation->getParameters());
+        $operation->setParameters($parameters = new Parameters());
+        $this->assertSame($parameters, $operation->getParameters());
+
+        $this->assertNull($operation->getTags());
+        $operation->setTags($tags = new Tags());
+        $this->assertSame($tags, $operation->getTags());
+
+        $this->assertNull($operation->getSecurity());
+        $operation->setSecurity($security = new SecurityRequirements());
+        $this->assertSame($security, $operation->getSecurity());
     }
 
-    public function createFullSpecification(): AbstractSpecification
+    public function testFullSpecification(): void
     {
-        return (new Operation(new Responses()))
-            ->setSummary('Some summary')
-            ->setDescription('Some description')
-            ->setExternalDocs(new ExternalDocumentation(new Url('http://example.org/docs')))
-            ->setOperationId('zah123')
-            ->setParameters(new Parameters())
-            ->setTags(new Tags())
-            ->setSecurity(new SecurityRequirements());
+        $operation = new Operation(
+            $responses = new Responses(),
+            'Some summary',
+            'Some description',
+            $externalDocs = ExternalDocumentation::create('http://example.org/docs'),
+            'Some operationId',
+            $parameters = new Parameters(),
+            $tags = new Tags(),
+            $security = new SecurityRequirements()
+        );
+
+        $this->assertSame($responses, $operation->getResponses());
+        $this->assertSame('Some summary', $operation->getSummary());
+        $this->assertSame('Some description', $operation->getDescription());
+        $this->assertSame($externalDocs, $operation->getExternalDocs());
+        $this->assertSame('Some operationId', $operation->getOperationId());
+        $this->assertSame($parameters, $operation->getParameters());
+        $this->assertSame($tags, $operation->getTags());
+        $this->assertSame($security, $operation->getSecurity());
     }
 }

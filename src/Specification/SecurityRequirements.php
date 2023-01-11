@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * An array of securityRequirement objects.
- *
- * @method SecurityRequirements addSecurityRequirement(SecurityRequirement $securityRequirement)
+ * Collection of securityRequirement objects.
  */
 final class SecurityRequirements extends AbstractSpecification
 {
+    /**
+     * SecurityRequirements constructor.
+     *
+     * @param array<SecurityRequirement> $securityRequirements
+     */
     public function __construct(array $securityRequirements = [])
     {
         foreach ($securityRequirements as $securityRequirement) {
@@ -18,8 +21,16 @@ final class SecurityRequirements extends AbstractSpecification
         }
     }
 
-    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    /**
+     * Add security requirement.
+     *
+     * @param SecurityRequirement $securityRequirement
+     * @return self
+     */
+    public function addSecurityRequirement(SecurityRequirement $securityRequirement): self
     {
-        parent::assertArrayableType($value, SecurityRequirement::class);
+        $this->properties[] = $securityRequirement;
+
+        return $this;
     }
 }

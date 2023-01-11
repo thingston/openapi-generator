@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\Schema;
 use Thingston\OpenApi\Specification\IntegerSchema;
+use Thingston\OpenApi\Specification\Schema;
 use Thingston\OpenApi\Test\AbstractTestCase;
 
 final class IntegerSchemaTest extends AbstractTestCase

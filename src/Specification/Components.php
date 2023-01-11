@@ -10,22 +10,19 @@ namespace Thingston\OpenApi\Specification;
  * they are explicitly referenced from properties outside the components object.
  *
  * @link https://swagger.io/specification/#components-object
- *
- * @method Schemas|null getSchemas()
- * @method Components setSchemas(?Schemas $schmes)
- * @method Responses|null getResponses()
- * @method Components setResponses(?Responses $responses)
- * @method Parameters|null getParameters()
- * @method Components setParameters(?Parameters $parameters)
- * @method Examples|null getExamples()
- * @method Components setExamples(?Examples $examples)
- * @method RequestBodies|null getRequestBodies()
- * @method Components setRequestBodies(?RequestBodies $requestBodies)
- * @method Headers|null getHeaders()
- * @method Components setHeaders(?Headers $headers)
  */
 final class Components extends AbstractSpecification
 {
+    /**
+     * Components constructor.
+     *
+     * @param Schemas|null $schemas
+     * @param Responses|null $responses
+     * @param Parameters|null $parameters
+     * @param Examples|null $examples
+     * @param RequestBodies|null $requestBodies
+     * @param Headers|null $headers
+     */
     public function __construct(
         ?Schemas $schemas = null,
         ?Responses $responses = null,
@@ -59,6 +56,150 @@ final class Components extends AbstractSpecification
         }
     }
 
+    /**
+     * Get schemas.
+     *
+     * @return Schemas|null
+     */
+    public function getSchemas(): ?Schemas
+    {
+        return $this->properties['schemas'] ?? null;
+    }
+
+    /**
+     * Set schemas.
+     *
+     * @param Schemas|null $schemas
+     * @return self
+     */
+    public function setSchemas(?Schemas $schemas): self
+    {
+        $this->properties['schemas'] = $schemas;
+
+        return $this;
+    }
+
+    /**
+     * Get responses.
+     *
+     * @return Responses|null
+     */
+    public function getResponses(): ?Responses
+    {
+        return $this->properties['responses'] ?? null;
+    }
+
+    /**
+     * Set responses.
+     *
+     * @param Responses|null $responses
+     * @return self
+     */
+    public function setResponses(?Responses $responses): self
+    {
+        $this->properties['responses'] = $responses;
+
+        return $this;
+    }
+
+    /**
+     * Get parameters.
+     *
+     * @return Parameters|null
+     */
+    public function getParameters(): ?Parameters
+    {
+        return $this->properties['parameters'] ?? null;
+    }
+
+    /**
+     * Set parameters.
+     *
+     * @param Parameters|null $parameters
+     * @return self
+     */
+    public function setParameters(?Parameters $parameters): self
+    {
+        $this->properties['parameters'] = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * Get examples.
+     *
+     * @return Examples|null
+     */
+    public function getExamples(): ?Examples
+    {
+        return $this->properties['examples'] ?? null;
+    }
+
+    /**
+     * Set examples.
+     *
+     * @param Examples|null $examples
+     * @return self
+     */
+    public function setExamples(?Examples $examples): self
+    {
+        $this->properties['examples'] = $examples;
+
+        return $this;
+    }
+
+    /**
+     * Get headers.
+     *
+     * @return Headers|null
+     */
+    public function getHeaders(): ?Headers
+    {
+        return $this->properties['headers'] ?? null;
+    }
+
+    /**
+     * Set headers.
+     *
+     * @param Headers|null $headers
+     * @return self
+     */
+    public function setHeaders(?Headers $headers): self
+    {
+        $this->properties['headers'] = $headers;
+
+        return $this;
+    }
+
+    /**
+     * Get request bodies.
+     *
+     * @return RequestBodies|null
+     */
+    public function getRequestBodies(): ?RequestBodies
+    {
+        return $this->properties['requestBodies'] ?? null;
+    }
+
+    /**
+     * Set request bodies.
+     *
+     * @param RequestBodies|null $requestBodies
+     * @return self
+     */
+    public function setRequestBodies(?RequestBodies $requestBodies): self
+    {
+        $this->properties['requestBodies'] = $requestBodies;
+
+        return $this;
+    }
+
+    /**
+     * Create Components instance.
+     *
+     * @param array $options
+     * @return self
+     */
     public static function create(array $options = []): self
     {
         if (isset($options['schemas']) && is_array($options['schemas'])) {
@@ -86,17 +227,5 @@ final class Components extends AbstractSpecification
         }
 
         return new self(...$options);
-    }
-
-    public function getOptionalProperties(): array
-    {
-        return [
-            'schemas' => Schemas::class,
-            'responses' => Responses::class,
-            'parameters' => Parameters::class,
-            'examples' => Examples::class,
-            'requestBodies' => RequestBodies::class,
-            'headers' => Headers::class,
-        ];
     }
 }

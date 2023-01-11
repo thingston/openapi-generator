@@ -28,6 +28,18 @@ namespace Thingston\OpenApi\Specification;
  */
 final class Operation extends AbstractSpecification
 {
+    /**
+     * Operation constructor.
+     *
+     * @param Responses $responses
+     * @param string|null $summary
+     * @param string|null $description
+     * @param ExternalDocumentation|null $externalDocs
+     * @param string|null $operationId
+     * @param Parameters|null $parameters
+     * @param Tags|null $tags
+     * @param SecurityRequirements|null $security
+     */
     public function __construct(
         Responses $responses,
         ?string $summary = null,
@@ -69,6 +81,197 @@ final class Operation extends AbstractSpecification
         }
     }
 
+    /**
+     * Get responses.
+     *
+     * @return Responses
+     */
+    public function getResponses(): Responses
+    {
+        return $this->properties['responses'];
+    }
+
+    /**
+     * Set responses.
+     *
+     * @param Responses $responses
+     * @return self
+     */
+    public function setResponses(Responses $responses): self
+    {
+        $this->properties['responses'] = $responses;
+
+        return $this;
+    }
+
+    /**
+     * Get summary.
+     *
+     * @return string|null
+     */
+    public function getSummary(): ?string
+    {
+        return $this->properties['summary'] ?? null;
+    }
+
+    /**
+     * Set summary.
+     *
+     * @param string|null $summary
+     * @return self
+     */
+    public function setSummary(?string $summary): self
+    {
+        $this->properties['summary'] = $summary;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->properties['description'] ?? null;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string|null $description
+     * @return self
+     */
+    public function setDescription(?string $description): self
+    {
+        $this->properties['description'] = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get external docs.
+     *
+     * @return ExternalDocumentation|null
+     */
+    public function getExternalDocs(): ?ExternalDocumentation
+    {
+        return $this->properties['externalDocs'] ?? null;
+    }
+
+    /**
+     * Set external docs.
+     *
+     * @param ExternalDocumentation|null $externalDocs
+     * @return self
+     */
+    public function setExternalDocs(?ExternalDocumentation $externalDocs): self
+    {
+        $this->properties['externalDocs'] = $externalDocs;
+
+        return $this;
+    }
+
+    /**
+     * Get operation id.
+     *
+     * @return string|null
+     */
+    public function getOperationId(): ?string
+    {
+        return $this->properties['operationId'] ?? null;
+    }
+
+    /**
+     * Set operation id.
+     *
+     * @param string|null $operationId
+     * @return self
+     */
+    public function setOperationId(?string $operationId): self
+    {
+        $this->properties['operationId'] = $operationId;
+
+        return $this;
+    }
+
+    /**
+     * Get parameters.
+     *
+     * @return Parameters|null
+     */
+    public function getParameters(): ?Parameters
+    {
+        return $this->properties['parameters'] ?? null;
+    }
+
+    /**
+     * Set parameters.
+     *
+     * @param Parameters|null $parameters
+     * @return self
+     */
+    public function setParameters(?Parameters $parameters): self
+    {
+        $this->properties['parameters'] = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * Get tags.
+     *
+     * @return Tags|null
+     */
+    public function getTags(): ?Tags
+    {
+        return $this->properties['tags'] ?? null;
+    }
+
+    /**
+     * Set tags.
+     *
+     * @param Tags|null $tags
+     * @return self
+     */
+    public function setTags(?Tags $tags): self
+    {
+        $this->properties['tags'] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get security.
+     *
+     * @return SecurityRequirements|null
+     */
+    public function getSecurity(): ?SecurityRequirements
+    {
+        return $this->properties['security'] ?? null;
+    }
+
+    /**
+     * Set security.
+     *
+     * @param SecurityRequirements|null $security
+     * @return self
+     */
+    public function setSecurity(?SecurityRequirements $security): self
+    {
+        $this->properties['security'] = $security;
+
+        return $this;
+    }
+
+    /**
+     * Create Operation instance.
+     *
+     * @param array<Response> $responses
+     * @param array $options
+     * @return self
+     */
     public static function create(array $responses, array $options = []): self
     {
         if (isset($options['parameters']) && is_array($options['parameters'])) {
@@ -88,25 +291,5 @@ final class Operation extends AbstractSpecification
         ]);
 
         return new self(...$parameters);
-    }
-
-    public function getRequiredProperties(): array
-    {
-        return [
-            'responses' => Responses::class,
-        ];
-    }
-
-    public function getOptionalProperties(): array
-    {
-        return [
-            'summary' => 'string',
-            'description' => 'string',
-            'externalDocs' => ExternalDocumentation::class,
-            'operationId' => 'string',
-            'parameters' => Parameters::class,
-            'tags' => Tags::class,
-            'security' => SecurityRequirements::class,
-        ];
     }
 }

@@ -4,20 +4,36 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\License;
 use Thingston\OpenApi\Specification\Url;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class LicenseTest extends AbstractSpecificationTest
+final class LicenseTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new License('License name');
+        $license = new License('License name');
+
+        $this->assertSame('License name', $license->getName());
+
+        $this->assertNull($license->getUrl());
+        $license->setUrl($url = new Url('http://example.org/license'));
+        $this->assertSame($url, $license->getUrl());
     }
 
-    public function createFullSpecification(): AbstractSpecification
+    public function testFullSpecification(): void
     {
-        return (new License('License name'))
-            ->setUrl(new Url('http://example.org/license'));
+        $license = new License('License name', $url = new Url('http://example.org/license'));
+
+        $this->assertSame('License name', $license->getName());
+        $this->assertSame($url, $license->getUrl());
+    }
+
+    public function testFactory(): void
+    {
+        $license = License::create('License name', 'http://example.org/license');
+
+        $this->assertSame('License name', $license->getName());
+        $this->assertSame('http://example.org/license', (string) $license->getUrl());
     }
 }

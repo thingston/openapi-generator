@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * An array of tag objects.
- *
- * @method Tags addTag(Tag $tag)
+ * Collection of tag objects.
  */
 final class Tags extends AbstractSpecification
 {
+    /**
+     * Tags constructor.
+     *
+     * @param array<Tag> $tags
+     */
     public function __construct(array $tags = [])
     {
         foreach ($tags as $tag) {
@@ -18,8 +21,16 @@ final class Tags extends AbstractSpecification
         }
     }
 
-    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    /**
+     * Add tag.
+     *
+     * @param Tag $tag
+     * @return self
+     */
+    public function addTag(Tag $tag): self
     {
-        parent::assertArrayableType($value, Tag::class);
+        $this->properties[] = $tag;
+
+        return $this;
     }
 }

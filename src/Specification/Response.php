@@ -9,16 +9,17 @@ namespace Thingston\OpenApi\Specification;
  * links to operations based on the response.
  *
  * @link https://swagger.io/specification/#response-object
- *
- * @method string getDescription()
- * @method Response setDescription(string $description)
- * @method Headers|null getHeaders()
- * @method Response setHeaders(?Headers $headers)
- * @method MediaTypes|null getContent()
- * @method Response setContent(?MediaTypes $content)
  */
 final class Response extends AbstractSpecification
 {
+    /**
+     * Response constructor.
+     *
+     * @param string $description
+     * @param string $status
+     * @param MediaTypes|null $content
+     * @param Headers|null $headers
+     */
     public function __construct(
         string $description,
         string $status = '200',
@@ -37,6 +38,84 @@ final class Response extends AbstractSpecification
         }
     }
 
+    /**
+     * Get description.
+     *
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->properties['description'];
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string $description
+     * @return self
+     */
+    public function setDescription(string $description): self
+    {
+        $this->properties['description'] = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get content.
+     *
+     * @return MediaTypes|null
+     */
+    public function getContent(): ?MediaTypes
+    {
+        return $this->properties['content'] ?? null;
+    }
+
+    /**
+     * Set content.
+     *
+     * @param MediaTypes|null $content
+     * @return self
+     */
+    public function setContent(?MediaTypes $content): self
+    {
+        $this->properties['content'] = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get headers.
+     *
+     * @return Headers|null
+     */
+    public function getHeaders(): ?Headers
+    {
+        return $this->properties['headers'] ?? null;
+    }
+
+    /**
+     * Set headers.
+     *
+     * @param Headers|null $headers
+     * @return self
+     */
+    public function setHeaders(?Headers $headers): self
+    {
+        $this->properties['headers'] = $headers;
+
+        return $this;
+    }
+
+    /**
+     * Create Response instance.
+     *
+     * @param string $description
+     * @param array<MediaType> $content
+     * @param string $status
+     * @param array $options
+     * @return self
+     */
     public static function create(
         string $description,
         array $content,
@@ -54,20 +133,5 @@ final class Response extends AbstractSpecification
         ]);
 
         return new self(...$parameters);
-    }
-
-    public function getRequiredProperties(): array
-    {
-        return [
-            'description' => 'string',
-        ];
-    }
-
-    public function getOptionalProperties(): array
-    {
-        return [
-            'headers' => Headers::class,
-            'content' => MediaTypes::class,
-        ];
     }
 }

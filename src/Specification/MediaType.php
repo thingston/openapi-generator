@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
+use Thingston\OpenApi\Exception\InvalidArgumentException;
+
 /**
  * Each Media Type Object provides schema and examples for the media type
  * identified by its key.
  *
  * @link https://swagger.io/specification/#media-type-object
- *
- * @method Schema|Reference|null getSchema()
- * @method MediaType setSchema(Schema|Reference|null $schema)
- * @method mixed getExample()
- * @method MediaType setExample($example)
- * @method Examples|null getExamples()
- * @method MediaType setExamples(?Examples $examples)
  */
 final class MediaType extends AbstractSpecification
 {
@@ -32,18 +27,23 @@ final class MediaType extends AbstractSpecification
     /**
      * MediaType.constructor.
      *
-     * @param string $type Expected content-type identifier for the current operation..
-     * @param Schema|Reference|null $schema Optional schema or reference.
-     * @param mixed $example Any value representing the expected output.
+     * @param string $key
+     * @param Schema|Reference|null $schema
+     * @param mixed $example
      * @param Examples|null $examples
      */
     public function __construct(
-        string $type = self::TYPE_JSON,
-        $schema = null,
-        $example = null,
-        $examples = null
+        string $key = self::TYPE_JSON,
+        mixed $schema = null,
+        mixed $example = null,
+        ?Examples $examples = null
     ) {
-        $this->key = $type;
+        $this->key = $key;
+
+        if (false === $schema instanceof Schema && false === $schema instanceof Reference && null !== $schema) {
+            throw new InvalidArgumentException('Argument "schema" must be of type Schema, Reference or null.');
+            ;
+        }
 
         if (null !== $schema) {
             $this->properties['schema'] = $schema;
@@ -59,21 +59,85 @@ final class MediaType extends AbstractSpecification
     }
 
     /**
+     * Get schema.
+     *
+     * @return Schema|Reference|null
+     */
+    public function getSchema(): mixed
+    {
+        return $this->properties['schema'] ?? null;
+    }
+
+    /**
+     * Set schema.
+     *
+     * @param Schema|Reference|null $schema
+     * @return self
+     */
+    public function setSchema(mixed $schema): self
+    {
+        $this->properties['schema'] = $schema;
+
+        return $this;
+    }
+
+    /**
+     * Get example.
+     *
+     * @return mixed
+     */
+    public function getExample(): mixed
+    {
+        return $this->properties['example'] ?? null;
+    }
+
+    /**
+     * Set example.
+     *
+     * @param mixed $example
+     * @return self
+     */
+    public function setExample(mixed $example): self
+    {
+        $this->properties['example'] = $example;
+
+        return $this;
+    }
+
+    /**
+     * Get examples.
+     *
+     * @return Examples|null
+     */
+    public function getExamples(): ?Examples
+    {
+        return $this->properties['examples'] ?? null;
+    }
+
+    /**
+     * Set examples.
+     *
+     * @param Examples|null $examples
+     * @return self
+     */
+    public function setExamples(?Examples $examples): self
+    {
+        $this->properties['examples'] = $examples;
+
+        return $this;
+    }
+
+    /**
      * Create a new instance of MediaType.
      *
-     * This method acts as a factory for this class using the required and the
-     * most common properties as arguments and an extra array of options to provide
-     * any other optional properties.
-     *
-     * @param Schema|Reference|null $schema Optional schema or reference.
-     * @param string $type Expected content-type identifier for the current operation..
-     * @param array $options An array containing any of the optional properties.
-     *
+     * @param Schema|Reference|null $schema
+     * @param string $key
+     * @param array $options
      * @return self
      */
     public static function create(
-        $schema,
-        string $type = self::TYPE_JSON,
+        mixed $schema,
+        string $key = self::TYPE_JSON,
         array $options = []
     ): self {
         if (isset($options['examples']) && is_array($options['examples'])) {
@@ -82,24 +146,9 @@ final class MediaType extends AbstractSpecification
 
         $parameters = array_merge($options, [
             'schema' => $schema,
-            'type' => $type,
+            'key' => $key,
         ]);
 
         return new self(...$parameters);
-    }
-
-    /**
-     * List of optional properties.
-     *
-     * @return array Key is the property name while values indicates the accepted
-     *               type (or types if separeted by pipes).
-     */
-    public function getOptionalProperties(): array
-    {
-        return [
-            'schema' => implode('|', [Schema::class, Reference::class]),
-            'example' => 'mixed',
-            'examples' => implode('|', [Examples::class, Reference::class]),
-        ];
     }
 }

@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\ServerVariable;
 use Thingston\OpenApi\Specification\ServerVariables;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class ServerVariablesTest extends AbstractSpecificationTest
+final class ServerVariablesTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new ServerVariables();
-    }
-
-    public function createFullSpecification(): AbstractSpecification
-    {
-        return new ServerVariables([
+        $variables = new ServerVariables([
             new ServerVariable('foo'),
-            new ServerVariable('bar'),
-            new ServerVariable('baz'),
         ]);
+
+        $this->assertCount(1, $variables);
+
+        $variables->addServerVariable(new ServerVariable('bar'));
+
+        $this->assertCount(2, $variables);
     }
 }

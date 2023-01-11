@@ -8,16 +8,16 @@ namespace Thingston\OpenApi\Specification;
  * An object representing a Server Variable for server URL template substitution.
  *
  * @link https://swagger.io/specification/#server-variable-object
- *
- * @method string getDefault()
- * @method ServerVariable setDefault(string $default)
- * @method string|null getDescription()
- * @method ServerVariable setDescription(?string $description)
- * @method Enum|null getEnum()
- * @method ServerVariable setEnum(?Enum $enum)
  */
 final class ServerVariable extends AbstractSpecification
 {
+    /**
+     * ServerVariable constructor.
+     *
+     * @param string $default
+     * @param string|null $description
+     * @param Enum|null $enum
+     */
     public function __construct(
         string $default,
         ?string $description = null,
@@ -34,6 +34,83 @@ final class ServerVariable extends AbstractSpecification
         }
     }
 
+    /**
+     * Get default.
+     *
+     * @return string
+     */
+    public function getDefault(): string
+    {
+        return $this->properties['default'];
+    }
+
+    /**
+     * Set default.
+     *
+     * @param string $default
+     * @return self
+     */
+    public function setDefault(string $default): self
+    {
+        $this->properties['default'] = $default;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->properties['description'] ?? null;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string|null $description
+     * @return self
+     */
+    public function setDescription(?string $description): self
+    {
+        $this->properties['description'] = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get enum.
+     *
+     * @return Enum|null
+     */
+    public function getEnum(): ?Enum
+    {
+        return $this->properties['enum'] ?? null;
+    }
+
+    /**
+     * Set default.
+     *
+     * @param Enum|null $enum
+     * @return self
+     */
+    public function setEnum(?Enum $enum): self
+    {
+        $this->properties['enum'] = $enum;
+
+        return $this;
+    }
+
+    /**
+     * Create ServerVariable instance.
+     *
+     * @param string $default
+     * @param array|null $enum
+     * @param array $options
+     * @return self
+     */
     public static function create(string $default, ?array $enum = null, array $options = []): self
     {
         if (is_array($enum)) {
@@ -46,20 +123,5 @@ final class ServerVariable extends AbstractSpecification
         ]);
 
         return new self(...$parameters);
-    }
-
-    public function getRequiredProperties(): array
-    {
-        return [
-            'default' => 'string',
-        ];
-    }
-
-    public function getOptionalProperties(): array
-    {
-        return [
-            'description' => 'string',
-            'enum' => Enum::class,
-        ];
     }
 }

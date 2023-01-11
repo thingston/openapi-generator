@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Test\Specification;
 
-use Thingston\OpenApi\Specification\AbstractSpecification;
 use Thingston\OpenApi\Specification\Tag;
 use Thingston\OpenApi\Specification\Tags;
+use Thingston\OpenApi\Test\AbstractTestCase;
 
-final class TagsTest extends AbstractSpecificationTest
+final class TagsTest extends AbstractTestCase
 {
-    public function createMinimalSpecification(): AbstractSpecification
+    public function testMinimalSpecification(): void
     {
-        return new Tags();
-    }
-
-    public function createFullSpecification(): AbstractSpecification
-    {
-        return new Tags([
-            new Tag('foo'),
-            new Tag('bar'),
+        $tags = new Tags([
+            Tag::create('foo'),
         ]);
+
+        $this->assertCount(1, $tags);
+
+        $tags->addTag(Tag::create('bar'));
+
+        $this->assertCount(2, $tags);
     }
 }
