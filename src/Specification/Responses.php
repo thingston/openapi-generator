@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * An array of response objects.
- *
- * @method Responses addResponse(Response|Reference $response)
-     */
+ * Collection of response objects.
+ */
 final class Responses extends AbstractSpecification
 {
+    /**
+     * Responses constructor.
+     *
+     * @param array $responses
+     */
     public function __construct(array $responses = [])
     {
         foreach ($responses as $response) {
@@ -18,11 +21,16 @@ final class Responses extends AbstractSpecification
         }
     }
 
-    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    /**
+     * Add response.
+     *
+     * @param Response $response
+     * @return self
+     */
+    public function addResponse(Response $response): self
     {
-        parent::assertArrayableType($value, implode('|', [
-            Response::class,
-            Reference::class,
-        ]));
+        $this->properties[] = $response;
+
+        return $this;
     }
 }

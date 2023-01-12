@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * An array of parameter objects.
- *
- * @method Parameters addParameter(Parameter $parameter)
+ * Collection of parameter objects.
  */
 final class Parameters extends AbstractSpecification
 {
+    /**
+     * Parameters constructor.
+     *
+     * @param array $parameters
+     */
     public function __construct(array $parameters = [])
     {
         foreach ($parameters as $parameter) {
@@ -18,8 +21,16 @@ final class Parameters extends AbstractSpecification
         }
     }
 
-    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    /**
+     * Add parameter.
+     *
+     * @param Parameter $parameter
+     * @return self
+     */
+    public function addParameter(Parameter $parameter): self
     {
-        parent::assertArrayableType($value, implode('|', [Parameter::class, Reference::class]));
+        $this->properties[] = $parameter;
+
+        return $this;
     }
 }

@@ -203,15 +203,4 @@ final class NumericSchema extends Schema
 
         return new self(...$parameters);
     }
-
-    public function getOptionalProperties(): array
-    {
-        return array_merge(parent::getOptionalProperties(), [
-            'minimum' => 'float',
-            'maximum' => 'float',
-            'exclusiveMinimum' => 'boolean',
-            'exclusiveMaximum' => 'boolean',
-            'multipleOf' => 'float|integer',
-        ]);
-    }
 }

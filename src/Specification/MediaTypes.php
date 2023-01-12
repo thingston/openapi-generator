@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * An array of mediaType objects.
- *
- * @method MediaTypes addMediaType(MediaType $mediaType)
+ * Collection of mediaType objects.
  */
 final class MediaTypes extends AbstractSpecification
 {
+    /**
+     * MediaTypes constructor.
+     *
+     * @param array $mediaTypes
+     */
     public function __construct(array $mediaTypes = [])
     {
         foreach ($mediaTypes as $mediaType) {
@@ -18,8 +21,16 @@ final class MediaTypes extends AbstractSpecification
         }
     }
 
-    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    /**
+     * Add media type.
+     *
+     * @param MediaType $mediaType
+     * @return self
+     */
+    public function addMediaType(MediaType $mediaType): self
     {
-        parent::assertArrayableType($value, MediaType::class);
+        $this->properties[] = $mediaType;
+
+        return $this;
     }
 }

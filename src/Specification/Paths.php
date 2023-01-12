@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * An array of pathItem objects.
- *
- * @method Paths addPathItem(PathItem $pathItem)
+ * Collection of pathItem objects.
  */
 final class Paths extends AbstractSpecification
 {
+    /**
+     * Paths constructor.
+     *
+     * @param array $paths
+     */
     public function __construct(array $paths = [])
     {
         foreach ($paths as $path) {
@@ -18,8 +21,16 @@ final class Paths extends AbstractSpecification
         }
     }
 
-    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    /**
+     * Add path item.
+     *
+     * @param PathItem $pathItem
+     * @return self
+     */
+    public function addPathItem(PathItem $pathItem): self
     {
-        parent::assertArrayableType($value, implode('|', [PathItem::class, Reference::class]));
+        $this->properties[] = $pathItem;
+
+        return $this;
     }
 }

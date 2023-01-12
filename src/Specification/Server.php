@@ -8,7 +8,6 @@ namespace Thingston\OpenApi\Specification;
  * An object representing a Server.
  *
  * @link https://swagger.io/specification/#server-object
- * @method Server setVariables(?ServerVariables $variables)
  */
 final class Server extends AbstractSpecification
 {

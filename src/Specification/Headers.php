@@ -5,12 +5,17 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * An array of header objects.
+ * Collection of header objects.
  *
  * @method Headers addHeader(Header $header)
  */
 final class Headers extends AbstractSpecification
 {
+    /**
+     * Headers constructor.
+     *
+     * @param array $headers
+     */
     public function __construct(array $headers = [])
     {
         foreach ($headers as $header) {
@@ -18,8 +23,16 @@ final class Headers extends AbstractSpecification
         }
     }
 
-    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    /**
+     * Add header.
+     *
+     * @param Header $header
+     * @return self
+     */
+    public function addHeader(Header $header): self
     {
-        parent::assertArrayableType($value, Header::class);
+        $this->properties[] = $header;
+
+        return $this;
     }
 }

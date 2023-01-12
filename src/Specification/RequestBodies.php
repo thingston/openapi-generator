@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Specification;
 
 /**
- * An array of requestBody objects.
- *
- * @method RequestBodies addRequestBody(RequestBody $requestBody)
+ * Collection of requestBody objects.
  */
 final class RequestBodies extends AbstractSpecification
 {
+    /**
+     * RequestBodies constructor.
+     *
+     * @param array $requestBodies
+     */
     public function __construct(array $requestBodies = [])
     {
         foreach ($requestBodies as $requestBody) {
@@ -18,11 +21,16 @@ final class RequestBodies extends AbstractSpecification
         }
     }
 
-    public function assertArrayableType(object $value, string $type = AbstractSpecification::class): void
+    /**
+     * Add request body.
+     *
+     * @param RequestBody $requestBody
+     * @return self
+     */
+    public function addRequestBody(RequestBody $requestBody): self
     {
-        parent::assertArrayableType($value, implode('|', [
-            RequestBodies::class,
-            Reference::class,
-        ]));
+        $this->properties[] = $requestBody;
+
+        return $this;
     }
 }
