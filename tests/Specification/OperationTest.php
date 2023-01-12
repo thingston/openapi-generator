@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Thingston\OpenApi\Test\Specification;
 
 use Thingston\OpenApi\Specification\ExternalDocumentation;
+use Thingston\OpenApi\Specification\MediaTypes;
 use Thingston\OpenApi\Specification\Operation;
 use Thingston\OpenApi\Specification\Parameters;
+use Thingston\OpenApi\Specification\RequestBody;
 use Thingston\OpenApi\Specification\Responses;
 use Thingston\OpenApi\Specification\SecurityRequirements;
 use Thingston\OpenApi\Specification\Tags;
@@ -40,6 +42,10 @@ final class OperationTest extends AbstractTestCase
         $operation->setParameters($parameters = new Parameters());
         $this->assertSame($parameters, $operation->getParameters());
 
+        $this->assertNull($operation->getRequestBody());
+        $operation->setRequestBody($requestBody = new RequestBody(new MediaTypes()));
+        $this->assertSame($requestBody, $operation->getRequestBody());
+
         $this->assertNull($operation->getTags());
         $operation->setTags($tags = new Tags());
         $this->assertSame($tags, $operation->getTags());
@@ -58,6 +64,7 @@ final class OperationTest extends AbstractTestCase
             $externalDocs = ExternalDocumentation::create('http://example.org/docs'),
             'Some operationId',
             $parameters = new Parameters(),
+            $requestBody = new RequestBody(new MediaTypes()),
             $tags = new Tags(),
             $security = new SecurityRequirements()
         );
@@ -68,6 +75,7 @@ final class OperationTest extends AbstractTestCase
         $this->assertSame($externalDocs, $operation->getExternalDocs());
         $this->assertSame('Some operationId', $operation->getOperationId());
         $this->assertSame($parameters, $operation->getParameters());
+        $this->assertSame($requestBody, $operation->getRequestBody());
         $this->assertSame($tags, $operation->getTags());
         $this->assertSame($security, $operation->getSecurity());
     }

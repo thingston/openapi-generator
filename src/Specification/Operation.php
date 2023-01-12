@@ -30,6 +30,7 @@ final class Operation extends AbstractSpecification
         ?ExternalDocumentation $externalDocs = null,
         ?string $operationId = null,
         ?Parameters $parameters = null,
+        ?RequestBody $requestBody = null,
         ?Tags $tags = null,
         ?SecurityRequirements $security = null
     ) {
@@ -53,6 +54,10 @@ final class Operation extends AbstractSpecification
 
         if (null !== $parameters) {
             $this->properties['parameters'] = $parameters;
+        }
+
+        if (null !== $requestBody) {
+            $this->properties['requestBody'] = $requestBody;
         }
 
         if (null !== $tags) {
@@ -198,6 +203,29 @@ final class Operation extends AbstractSpecification
     public function setParameters(?Parameters $parameters): self
     {
         $this->properties['parameters'] = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * Get request body.
+     *
+     * @return RequestBody|null
+     */
+    public function getRequestBody(): ?RequestBody
+    {
+        return $this->properties['requestBody'] ?? null;
+    }
+
+    /**
+     * Set request body.
+     *
+     * @param RequestBody|null $requestBody
+     * @return self
+     */
+    public function setRequestBody(?RequestBody $requestBody): self
+    {
+        $this->properties['requestBody'] = $requestBody;
 
         return $this;
     }
