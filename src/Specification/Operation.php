@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
+use Thingston\OpenApi\Exception\InvalidArgumentException;
+
 /**
  * Describes a single API operation on a path.
  *
@@ -20,6 +22,7 @@ final class Operation extends AbstractSpecification
      * @param ExternalDocumentation|null $externalDocs
      * @param string|null $operationId
      * @param Parameters|null $parameters
+     * @param RequestBody|Reference|null $requestBody
      * @param Tags|null $tags
      * @param SecurityRequirements|null $security
      */
@@ -30,7 +33,7 @@ final class Operation extends AbstractSpecification
         ?ExternalDocumentation $externalDocs = null,
         ?string $operationId = null,
         ?Parameters $parameters = null,
-        ?RequestBody $requestBody = null,
+        mixed $requestBody = null,
         ?Tags $tags = null,
         ?SecurityRequirements $security = null
     ) {
@@ -54,6 +57,15 @@ final class Operation extends AbstractSpecification
 
         if (null !== $parameters) {
             $this->properties['parameters'] = $parameters;
+        }
+
+        if (
+            false === $requestBody instanceof RequestBody
+            && false === $requestBody instanceof Reference
+            && null !== $requestBody
+        ) {
+            $message = 'Argument "requestBody" must be of the type RequestBody, Reference or null.';
+            throw new InvalidArgumentException($message);
         }
 
         if (null !== $requestBody) {
@@ -220,11 +232,20 @@ final class Operation extends AbstractSpecification
     /**
      * Set request body.
      *
-     * @param RequestBody|null $requestBody
+     * @param RequestBody|Reference|null $requestBody
      * @return self
      */
-    public function setRequestBody(?RequestBody $requestBody): self
+    public function setRequestBody(mixed $requestBody): self
     {
+        if (
+            false === $requestBody instanceof RequestBody
+            && false === $requestBody instanceof Reference
+            && null !== $requestBody
+        ) {
+            $message = 'Argument "requestBody" must be of the type RequestBody, Reference or null.';
+            throw new InvalidArgumentException($message);
+        }
+
         $this->properties['requestBody'] = $requestBody;
 
         return $this;

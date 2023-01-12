@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
+use Thingston\OpenApi\Exception\InvalidArgumentException;
+
 /**
  * Collection of parameter objects.
  */
@@ -24,11 +26,16 @@ final class Parameters extends AbstractSpecification
     /**
      * Add parameter.
      *
-     * @param Parameter $parameter
+     * @param Parameter|Reference $parameter
      * @return self
+     * @throws InvalidArgumentException
      */
-    public function addParameter(Parameter $parameter): self
+    public function addParameter(mixed $parameter): self
     {
+        if (false === $parameter instanceof Parameter && false === $parameter instanceof Reference) {
+            throw new InvalidArgumentException('Argument "parameter" must be of type Parameter or Reference');
+        }
+
         $this->properties[] = $parameter;
 
         return $this;

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thingston\OpenApi\Specification;
 
+use Thingston\OpenApi\Exception\InvalidArgumentException;
+
 /**
  * Collection of response objects.
  */
@@ -24,11 +26,16 @@ final class Responses extends AbstractSpecification
     /**
      * Add response.
      *
-     * @param Response $response
+     * @param Response|Reference $response
      * @return self
+     * @throws InvalidArgumentException
      */
-    public function addResponse(Response $response): self
+    public function addResponse(mixed $response): self
     {
+        if (false === $response instanceof Response && false === $response instanceof Reference) {
+            throw new InvalidArgumentException('Argument "response" must be of type Response or Reference');
+        }
+
         $this->properties[] = $response;
 
         return $this;
