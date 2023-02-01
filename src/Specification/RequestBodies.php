@@ -26,7 +26,7 @@ final class RequestBodies extends AbstractSpecification
     /**
      * Add request body.
      *
-     * @param RequestBody|Reference $requestBody
+     * @param RequestBody|RequestBodyReference $requestBody
      * @return self
      * @throws InvalidArgumentException
      */

@@ -26,14 +26,14 @@ final class MediaTypes extends AbstractSpecification
     /**
      * Add media type.
      *
-     * @param MediaType|Reference $mediaType
+     * @param MediaType|MediaTypeReference $mediaType
      * @return self
      * @throws InvalidArgumentException
      */
     public function addMediaType(mixed $mediaType): self
     {
         if (false === $mediaType instanceof MediaType && false === $mediaType instanceof Reference) {
-            throw new InvalidArgumentException('Argument "mediaType" must be of type MediaType or Reference');
+            throw new InvalidArgumentException('Argument "mediaType" must be of type MediaType or MediaTypeReference');
         }
 
         $this->properties[] = $mediaType;

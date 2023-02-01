@@ -22,7 +22,7 @@ final class Operation extends AbstractSpecification
      * @param ExternalDocumentation|null $externalDocs
      * @param string|null $operationId
      * @param Parameters|null $parameters
-     * @param RequestBody|Reference|null $requestBody
+     * @param RequestBody|RequestBodyReference|null $requestBody
      * @param Tags|null $tags
      * @param SecurityRequirements|null $security
      */
@@ -61,7 +61,7 @@ final class Operation extends AbstractSpecification
 
         if (
             false === $requestBody instanceof RequestBody
-            && false === $requestBody instanceof Reference
+            && false === $requestBody instanceof RequestBodyReference
             && null !== $requestBody
         ) {
             $message = 'Argument "requestBody" must be of the type RequestBody, Reference or null.';
@@ -232,14 +232,14 @@ final class Operation extends AbstractSpecification
     /**
      * Set request body.
      *
-     * @param RequestBody|Reference|null $requestBody
+     * @param RequestBody|RequestBodyReference|null $requestBody
      * @return self
      */
     public function setRequestBody(mixed $requestBody): self
     {
         if (
             false === $requestBody instanceof RequestBody
-            && false === $requestBody instanceof Reference
+            && false === $requestBody instanceof RequestBodyReference
             && null !== $requestBody
         ) {
             $message = 'Argument "requestBody" must be of the type RequestBody, Reference or null.';

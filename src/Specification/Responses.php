@@ -26,7 +26,7 @@ final class Responses extends AbstractSpecification
     /**
      * Add response.
      *
-     * @param Response|Reference $response
+     * @param Response|ResponseReference $response
      * @return self
      * @throws InvalidArgumentException
      */

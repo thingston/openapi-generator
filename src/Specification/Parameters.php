@@ -26,7 +26,7 @@ final class Parameters extends AbstractSpecification
     /**
      * Add parameter.
      *
-     * @param Parameter|Reference $parameter
+     * @param Parameter|ParameterReference $parameter
      * @return self
      * @throws InvalidArgumentException
      */

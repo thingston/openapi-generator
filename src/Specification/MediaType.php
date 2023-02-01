@@ -28,7 +28,7 @@ final class MediaType extends AbstractSpecification
      * MediaType.constructor.
      *
      * @param string $key
-     * @param Schema|Reference|null $schema
+     * @param Schema|SchemaReference|null $schema
      * @param mixed $example
      * @param Examples|null $examples
      */
@@ -40,7 +40,11 @@ final class MediaType extends AbstractSpecification
     ) {
         $this->key = $key;
 
-        if (false === $schema instanceof Schema && false === $schema instanceof Reference && null !== $schema) {
+        if (
+            false === $schema instanceof Schema
+            && false === $schema instanceof SchemaReference
+            && null !== $schema
+        ) {
             throw new InvalidArgumentException('Argument "schema" must be of type Schema, Reference or null.');
             ;
         }
@@ -61,7 +65,7 @@ final class MediaType extends AbstractSpecification
     /**
      * Get schema.
      *
-     * @return Schema|Reference|null
+     * @return Schema|SchemaReference|null
      */
     public function getSchema(): mixed
     {
@@ -71,7 +75,7 @@ final class MediaType extends AbstractSpecification
     /**
      * Set schema.
      *
-     * @param Schema|Reference|null $schema
+     * @param Schema|SchemaReference|null $schema
      * @return self
      */
     public function setSchema(mixed $schema): self
@@ -130,7 +134,7 @@ final class MediaType extends AbstractSpecification
     /**
      * Create a new instance of MediaType.
      *
-     * @param Schema|Reference|null $schema
+     * @param Schema|SchemaReference|null $schema
      * @param string $key
      * @param array $options
      * @return self

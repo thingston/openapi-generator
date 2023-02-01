@@ -28,7 +28,7 @@ final class Headers extends AbstractSpecification
     /**
      * Add header.
      *
-     * @param Header|Reference $header
+     * @param Header|HeaderReference $header
      * @return self
      */
     public function addHeader(mixed $header): self

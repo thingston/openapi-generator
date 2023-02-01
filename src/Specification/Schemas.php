@@ -14,7 +14,7 @@ final class Schemas extends AbstractSpecification
     /**
      * Schemas constructor.
      *
-     * @param array<Schema|Reference> $schemas
+     * @param array<Schema|SchemaReference> $schemas
      */
     public function __construct(array $schemas = [])
     {
@@ -26,7 +26,7 @@ final class Schemas extends AbstractSpecification
     /**
      * Add schema.
      *
-     * @param Schema|Reference $schema
+     * @param Schema|SchemaReference $schema
      * @return self
      * @throws InvalidArgumentException
      */

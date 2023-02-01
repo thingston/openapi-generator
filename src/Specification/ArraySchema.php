@@ -18,7 +18,7 @@ final class ArraySchema extends Schema
      * ArraySchema constructor.
      *
      * @param string $key
-     * @param Schema|Reference|null $items
+     * @param Schema|SchemaReference|null $items
      * @param bool|null $additionalItems
      * @param int|null $minItems
      * @param int|null $maxItems
@@ -42,7 +42,11 @@ final class ArraySchema extends Schema
     ) {
         parent::__construct($key, self::TYPE_ARRAY, $title, $description, $nullable, $example);
 
-        if (false === $items instanceof Schema && false === $items instanceof Reference && false === is_null($items)) {
+        if (
+            false === $items instanceof Schema
+            && false === $items instanceof SchemaReference
+            && null !== $items
+        ) {
             throw new InvalidArgumentException('Argument "items" must be of type Schema, Reference or null.');
         }
 
@@ -70,7 +74,7 @@ final class ArraySchema extends Schema
     /**
      * Get items.
      *
-     * @return Schema|Reference|null
+     * @return Schema|SchemaReference|null
      */
     public function getItems(): mixed
     {
@@ -80,13 +84,17 @@ final class ArraySchema extends Schema
     /**
      * Set items.
      *
-     * @param Schema|Reference|null $items
+     * @param Schema|SchemaReference|null $items
      * @return self
      * @throws InvalidArgumentException
      */
     public function setItems(mixed $items): self
     {
-        if (false === $items instanceof Schema && false === $items instanceof Reference && false === is_null($items)) {
+        if (
+            false === $items instanceof Schema
+            && false === $items instanceof SchemaReference
+            && null !== $items
+        ) {
             throw new InvalidArgumentException('Argument "items" must be of type Schema, Reference or null.');
         }
 
@@ -191,7 +199,7 @@ final class ArraySchema extends Schema
      * Create ArraySchema instance.
      *
      * @param string $key
-     * @param Schema|Reference|null $items
+     * @param Schema|SchemaReference|null $items
      * @param string|null $title
      * @param array $options
      * @return self

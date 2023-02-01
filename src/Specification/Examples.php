@@ -26,7 +26,7 @@ final class Examples extends AbstractSpecification
     /**
      * Add example.
      *
-     * @param Example|Reference $example
+     * @param Example|ExampleReference $example
      * @return self
      * @throws InvalidArgumentException
      */
