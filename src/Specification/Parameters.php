@@ -32,8 +32,8 @@ final class Parameters extends AbstractSpecification
      */
     public function addParameter(mixed $parameter): self
     {
-        if (false === $parameter instanceof Parameter && false === $parameter instanceof Reference) {
-            throw new InvalidArgumentException('Argument "parameter" must be of type Parameter or Reference');
+        if (false === $parameter instanceof Parameter && false === $parameter instanceof ParameterReference) {
+            throw new InvalidArgumentException('Argument "parameter" must be of type Parameter or ParameterReference');
         }
 
         $this->properties[] = $parameter;
