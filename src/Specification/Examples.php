@@ -32,8 +32,8 @@ final class Examples extends AbstractSpecification
      */
     public function addExample(mixed $example): self
     {
-        if (false === $example instanceof Example && false === $example instanceof Reference) {
-            throw new InvalidArgumentException('Argument "example" must be of type Example or Reference');
+        if (false === $example instanceof Example && false === $example instanceof ExampleReference) {
+            throw new InvalidArgumentException('Argument "example" must be of type Example or ExampleReference');
         }
 
         $this->properties[] = $example;
