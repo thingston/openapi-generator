@@ -33,8 +33,8 @@ final class Headers extends AbstractSpecification
      */
     public function addHeader(mixed $header): self
     {
-        if (false === $header instanceof Header && false === $header instanceof Reference) {
-            throw new InvalidArgumentException('Argument "header" must be of type Header or Reference');
+        if (false === $header instanceof Header && false === $header instanceof HeaderReference) {
+            throw new InvalidArgumentException('Argument "header" must be of type Header or HeaderReference');
         }
 
         $this->properties[] = $header;
