@@ -32,8 +32,10 @@ final class RequestBodies extends AbstractSpecification
      */
     public function addRequestBody(mixed $requestBody): self
     {
-        if (false === $requestBody instanceof RequestBody && false === $requestBody instanceof Reference) {
-            throw new InvalidArgumentException('Argument "requestBody" must be of type RequestBody or Reference');
+        if (false === $requestBody instanceof RequestBody && false === $requestBody instanceof RequestBodyReference) {
+            throw new InvalidArgumentException(
+                'Argument "requestBody" must be of type RequestBody or RequestBodyReference'
+            );
         }
 
         $this->properties[] = $requestBody;
