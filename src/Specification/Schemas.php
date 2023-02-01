@@ -32,8 +32,8 @@ final class Schemas extends AbstractSpecification
      */
     public function addSchema(mixed $schema): self
     {
-        if (false === $schema instanceof Schema && false === $schema instanceof Reference) {
-            throw new InvalidArgumentException('Argument "schema" must be of type Schema or Reference');
+        if (false === $schema instanceof Schema && false === $schema instanceof SchemaReference) {
+            throw new InvalidArgumentException('Argument "schema" must be of type Schema or SchemaReference');
         }
 
         $this->properties[] = $schema;
