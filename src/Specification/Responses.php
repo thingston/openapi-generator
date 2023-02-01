@@ -32,8 +32,8 @@ final class Responses extends AbstractSpecification
      */
     public function addResponse(mixed $response): self
     {
-        if (false === $response instanceof Response && false === $response instanceof Reference) {
-            throw new InvalidArgumentException('Argument "response" must be of type Response or Reference');
+        if (false === $response instanceof Response && false === $response instanceof ResponseReference) {
+            throw new InvalidArgumentException('Argument "response" must be of type Response or ResponseReference');
         }
 
         $this->properties[] = $response;
